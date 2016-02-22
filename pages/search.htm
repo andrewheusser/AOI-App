@@ -25,6 +25,7 @@ Results for search: <b>{{search}}</b>
       <div class="panel-body">
         <div ng-show="showAbstract">
             {{article.abstract}}
+            
         </div>
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
@@ -33,17 +34,6 @@ Results for search: <b>{{search}}</b>
   </div>
 </div>
 
-<!-- <div class="bs-example">
-    <ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
-</div> -->
 <center>
   <button type="button" class="btn btn-xl btn-info" ng-click="loadMore(articles)">
     <a style="color:white; text-decoration:none" href="#/search"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.length>articles.searchResults ? "That's all folks" : "Load More"}}</a>

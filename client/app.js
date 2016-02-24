@@ -10,6 +10,16 @@ AOIApp.config(function ($routeProvider) {
     controller: 'homeController'
   })
 
+  .when('/myjournals', {
+    templateUrl: 'pages/myjournals.htm',
+    controller: 'myJournalsController'
+  })
+
+  .when('/login', {
+    templateUrl: 'pages/login.htm',
+    controller: 'homeController'
+  })
+
   .when('/search', {
     templateUrl: 'pages/search.htm',
     controller: 'searchController'
@@ -67,6 +77,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
       searchResults = (ids) => {
         return new Promise((res,rej)=>{
+          getAbstracts(ids).then((results)=>{console.log(results)})
           getArticles(ids)
           .then((data)=>{
             console.log(data)
@@ -167,8 +178,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       });
 
       $scope.loadMore = pubMedService.loadMore;
-      var numload = 5;
-      var loaded = 5;
+      var numload = 20;
+      var loaded = 20;
 
 
       pubMedService.getIds($scope.search)
@@ -185,6 +196,21 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
       $scope.$watch('search',()=>{
         $scope.search = pubMedService.search;
-      })
+      });
+
+      $scope.filterFunction = function(element) {
+          return element.title.match(/^Ma/)||element.title.name(/^Ma/)||element.title.year(/^Ma/) ? true : false;
+      };
+
+    }]);
+
+    // CONTROLLERS
+    AOIApp.controller('myJournalsController', ['$scope', 'pubMedService', function($scope, pubMedService) {
+
+    $scope.journals = [
+      {title: "Current Biology"},
+      {title: "Nature Neuroscience"},
+      {title: "Learning and Memory"},
+    ]
 
     }]);

@@ -1,17 +1,27 @@
+<div>
 <a href="#/" class="btn btn-danger" style="margin-right:20px">Back</a>
 Results for search: <b>{{search}}</b>
+<!-- <form class="form form-inline pull-right">
+      <input ng-model="query" type="text"
+        placeholder="Filter by" autofocus>
+</form> -->
+<div class="form-group pull-right">
+    <input type="text" ng-model="query" class="form-control" placeholder="Filter by"/>
+</div>
+<div>
 <hr />
-<div ng-repeat="article in articles">
+<div ng-repeat="article in articles | filter:query | orderBy:'-year'">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="#" style="text-decoration:none" class="">
+      <a style="text-decoration:none" class="">
         <h4>
           <span>
-            <button type="button" class="btn btn-sm btn-success" style="margin-right:20px">{{article.year}}</button>
+            <a class="btn btn-sm btn-success" style="margin-right:20px">{{article.year}}</a>
           </span>
-          <span>
-            <button type="button" class="btn btn-sm btn-warning pull-right" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button>
-            <button type="button" onClick="window.open('http://www.ncbi.nlm.nih.gov/pubmed/');" class="btn btn-sm btn-warning pull-right" style="margin-right:10px"><span class="glyphicon glyphicon-link"></span></button>
+          <span class="pull-right">
+            <!-- <button type="button" onClick="window.open('http://www.ncbi.nlm.nih.gov/pubmed/');" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button> -->
+            <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-plus"></span></button>
+            <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button>
           </span>
           <div style="margin-top:15px; max-width:100%">
             {{article.title}}
@@ -25,8 +35,8 @@ Results for search: <b>{{search}}</b>
       <div class="panel-body">
         <div ng-show="showAbstract">
             {{article.abstract}}
-            
         </div>
+        <div></div>
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
         </button>

@@ -1,7 +1,7 @@
 var AOIApp = angular.module('AOIApp', ['ngRoute', 'ngResource']);
 
 // ROUTES
-AOIApp.config(function ($routeProvider) {
+AOIApp.config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
 
@@ -23,7 +23,9 @@ AOIApp.config(function ($routeProvider) {
   .when('/search', {
     templateUrl: 'pages/search.htm',
     controller: 'searchController'
-  })
+  });
+
+  $locationProvider.html5Mode(true);
 
 });
 
@@ -72,15 +74,15 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         console.log(result)
         return result
       }, (err)=>{
-        console.log("there was an error")
+        console.log("Couldn't get articles!")
+        return err
       });
 
       searchResults = (ids) => {
         return new Promise((res,rej)=>{
-          getAbstracts(ids).then((results)=>{console.log(results)})
-          getArticles(ids)
+          getAbstracts(ids)
+          // getArticles(ids)
           .then((data)=>{
-            console.log(data)
             articles = formatArticles(data)
             res(articles)
           }, (err) => {
@@ -98,30 +100,51 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         this.source = '';
       }
 
+      // formatArticles = (data) => {
+      //   articlesArray = [];
+      //   article = {};
+      //   for (id of Object.keys(data)){
+      //     if(id !='uids'){
+      //       article[id]= new Article();
+      //       article[id].title = data[id].title;
+      //       article[id].authorsFormatted = formatAuthors(data[id]);
+      //       article[id].year = formatYear(data[id]);
+      //       article[id].id=id;
+      //       article[id].source = data[id].source;
+      //       articlesArray.push(article[id]);
+      //     }
+      //   }
+      //   return articlesArray
+      // };
       formatArticles = (data) => {
         articlesArray = [];
-        article = {};
-        for (id of Object.keys(data)){
-          if(id !='uids'){
-            article[id]= new Article();
-            article[id].title = data[id].title;
-            article[id].authorsFormatted = formatAuthors(data[id]);
-            article[id].year = formatYear(data[id]);
-            article[id].id=id;
-            article[id].source = data[id].source;
-            articlesArray.push(article[id]);
-          }
-        }
-        return articlesArray
-      };
+        // article = {};
+        data = data.data.PubmedArticleSet.PubmedArticle;
+        data.forEach((article)=>{
+            console.log(article)
+            articleObj = new Article();
+            articleObj.title = article.MedlineCitation.Article.ArticleTitle;
+            articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
+            articleObj.year = article.PubmedData.History.PubMedPubDate[0].Year;
+            articleObj.id=article.MedlineCitation.PMID.__text;
+            articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
+            articleObj.abstract = (typeof article.MedlineCitation.Article.Abstract === 'undefined') ? 'No Abstract Found' : article.MedlineCitation.Article.Abstract.AbstractText;
+            articlesArray.push(articleObj);
+          });
+          return articlesArray
+        };
 
-      formatAuthors = (article) => {
-        authorList=[];
-        for (author of article.authors){
-          authorList.push(author.name)
-        }
-        return authorList.join(', ')
-      };
+      formatAuthors = (authors) => {
+        if(authors.constructor === Array) {
+          authorList=[];
+          authors.forEach((author)=>{
+            authorList.push(author.LastName + ' ' + author.Initials)
+          });
+          return authorList.join(', ')
+        } else if(authors.constructor === Object){
+            return authors.LastName + ' ' + authors.Initials
+          }
+        };
 
       formatYear = (article) => {
         return article.pubdate.split(' ')[0];
@@ -131,8 +154,9 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         return new Promise((res,rej)=>{
           moreIds = articles.searchResults.slice(articles.loaded+1,articles.loaded+1+articles.numload);
           console.log(moreIds)
-          getArticles(moreIds)
+          getAbstracts(moreIds)
           .then((data)=>{
+            console.log(data)
             formattedNewArticles = formatArticles(data);
             formattedNewArticles.forEach((newArticle)=>{
               articles.push(newArticle)
@@ -155,13 +179,17 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
     }]);
 
     // CONTROLLERS
-    AOIApp.controller('homeController', ['$scope', 'pubMedService', function($scope, pubMedService) {
+    AOIApp.controller('homeController', ['$scope', '$location', 'pubMedService', function($scope, $location, pubMedService) {
 
       $scope.search = pubMedService.search;
 
       $scope.$watch('search', function(){
         return pubMedService.search = $scope.search;
       });
+
+      $scope.submit = () => {
+        $location.path("/search");
+      };
 
     }]);
 
@@ -172,6 +200,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       $scope.search = pubMedService.search;
       $scope.loggedIn = true;
       $scope.showAbstract = false;
+      $scope.loading = true;
 
       $scope.$watch('search', function(){
         return pubMedService.search = $scope.search;
@@ -181,7 +210,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       var numload = 20;
       var loaded = 20;
 
-
       pubMedService.getIds($scope.search)
       .then((results) => {
         $scope.results = results;
@@ -190,6 +218,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           $scope.articles.searchResults = $scope.results;
           $scope.articles.numload = numload;
           $scope.articles.loaded = loaded;
+          $scope.loading = false;
           $scope.$apply();
         })
       });

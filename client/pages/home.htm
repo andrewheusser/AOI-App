@@ -3,10 +3,12 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <h4>Search for articles on PubMed:</h4>
-        <div class="form-group">
+        <form ng-submit="submit()">
+          <div class="form-group">
             <input type="text" ng-model="search" class="form-control"/>
-        </div>
-          <a href="#/search" type="button" class="btn btn-primary btn-lg">Search</a>
+          </div>
+          <input type="submit" class="btn btn-primary btn-lg" value="Search"/>
+        </form>
     </div>
 </div>
 </center>

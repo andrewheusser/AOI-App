@@ -8,7 +8,7 @@
       <tr ng-repeat="journal in journals">
         <td>
           {{journal.title}}
-            <a class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></a>
+            <a ng-click="removeJournal()"class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></a>
         </td>
       </tr>
     </table>
@@ -16,7 +16,7 @@
     <div class="form-inline" >
             <div class="form-group" style="overflow:auto">
                 <input type="text" ng-model="search" class="form-control" />
-                <a href="#/addjournal" type="button" class="btn btn-primary btn-md">Add</a>
+                <a ng-click="addJournal()" type="button" class="btn btn-primary btn-md">Add</a>
             </div>
     </div>
     </center>

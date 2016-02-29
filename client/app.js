@@ -17,11 +17,16 @@ AOIApp.config(function ($routeProvider, $locationProvider) {
 
   .when('/login', {
     templateUrl: 'pages/login.htm',
-    controller: 'homeController'
+    controller: 'loginController'
   })
 
   .when('/search', {
     templateUrl: 'pages/search.htm',
+    controller: 'searchController'
+  })
+
+  .when('/db', {
+    templateUrl: 'pages/db.htm',
     controller: 'searchController'
   });
 
@@ -121,18 +126,18 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         // article = {};
         data = data.data.PubmedArticleSet.PubmedArticle;
         data.forEach((article)=>{
-            console.log(article)
-            articleObj = new Article();
-            articleObj.title = article.MedlineCitation.Article.ArticleTitle;
-            articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
-            articleObj.year = article.PubmedData.History.PubMedPubDate[0].Year;
-            articleObj.id=article.MedlineCitation.PMID.__text;
-            articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
-            articleObj.abstract = (typeof article.MedlineCitation.Article.Abstract === 'undefined') ? 'No Abstract Found' : article.MedlineCitation.Article.Abstract.AbstractText;
-            articlesArray.push(articleObj);
-          });
-          return articlesArray
-        };
+          console.log(article)
+          articleObj = new Article();
+          articleObj.title = article.MedlineCitation.Article.ArticleTitle;
+          articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
+          articleObj.year = article.PubmedData.History.PubMedPubDate[0].Year;
+          articleObj.id=article.MedlineCitation.PMID.__text;
+          articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
+          articleObj.abstract = (typeof article.MedlineCitation.Article.Abstract === 'undefined') ? 'No Abstract Found' : article.MedlineCitation.Article.Abstract.AbstractText;
+          articlesArray.push(articleObj);
+        });
+        return articlesArray
+      };
 
       formatAuthors = (authors) => {
         if(authors.constructor === Array) {
@@ -142,9 +147,9 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           });
           return authorList.join(', ')
         } else if(authors.constructor === Object){
-            return authors.LastName + ' ' + authors.Initials
-          }
-        };
+          return authors.LastName + ' ' + authors.Initials
+        }
+      };
 
       formatYear = (article) => {
         return article.pubdate.split(' ')[0];
@@ -198,7 +203,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       MY_SCOPE = $scope;
 
       $scope.search = pubMedService.search;
-      $scope.loggedIn = true;
       $scope.showAbstract = false;
       $scope.loading = true;
 
@@ -228,7 +232,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       });
 
       $scope.filterFunction = function(element) {
-          return element.title.match(/^Ma/)||element.title.name(/^Ma/)||element.title.year(/^Ma/) ? true : false;
+        return element.title.match(/^Ma/)||element.title.name(/^Ma/)||element.title.year(/^Ma/) ? true : false;
       };
 
     }]);
@@ -236,10 +240,10 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
     // CONTROLLERS
     AOIApp.controller('myJournalsController', ['$scope', 'pubMedService', function($scope, pubMedService) {
 
-    $scope.journals = [
-      {title: "Current Biology"},
-      {title: "Nature Neuroscience"},
-      {title: "Learning and Memory"},
-    ]
+      $scope.journals = [
+        {title: "Current Biology"},
+        {title: "Nature Neuroscience"},
+        {title: "Learning and Memory"},
+      ]
 
     }]);

@@ -12,7 +12,7 @@ Results for search: <b>{{search}}</b>
       <a style="text-decoration:none" class="">
         <h4>
           <span>
-            <a class="btn btn-sm btn-success" style="margin-right:20px">{{article.year}}</a>
+            <a class="btn btn-sm btn-success">{{article.year}}</a>
           </span>
           <span class="pull-right">
             <button type="button" ng-click="navigationUrl($event,article.id)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
@@ -35,12 +35,13 @@ Results for search: <b>{{search}}</b>
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
         </button>
+        <span style="margin-top:20px" ng-class="!articleInDB ? 'glyphicon glyphicon-ok pull-right' : ''"></span>
       </div>
   </div>
 </div>
 <center>
   <button type="button" class="btn btn-xl btn-info" ng-hide="loading" ng-click="loadMore(articles)">
-    <a style="color:white; text-decoration:none" href="#/search"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.length>articles.searchResults ? "That's all folks" : "Load More"}}</a>
+    <a style="color:white; text-decoration:none" href="/search"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.length>articles.searchResults ? "That's all folks" : "Load More"}}</a>
   </button>
 </center>
 

@@ -6,9 +6,6 @@ Results for search: <b>{{search}}</b>
 </div>
 <div>
 <hr />
-<p class="text-center" ng-show="loading">
-  <span class="fa fa-cog fa-spin fa-5x"></span>
-</p>
 <div ng-repeat="article in articles | filter:query | orderBy:'-year'">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -18,7 +15,7 @@ Results for search: <b>{{search}}</b>
             <a class="btn btn-sm btn-success" style="margin-right:20px">{{article.year}}</a>
           </span>
           <span class="pull-right">
-            <!-- <button type="button" onClick="window.open('http://www.ncbi.nlm.nih.gov/pubmed/');" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button> -->
+            <button type="button" ng-click="navigationUrl($event,article.id)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
             <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-plus"></span></button>
             <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button>
           </span>
@@ -41,7 +38,6 @@ Results for search: <b>{{search}}</b>
       </div>
   </div>
 </div>
-
 <center>
   <button type="button" class="btn btn-xl btn-info" ng-hide="loading" ng-click="loadMore(articles)">
     <a style="color:white; text-decoration:none" href="#/search"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.length>articles.searchResults ? "That's all folks" : "Load More"}}</a>
@@ -51,13 +47,18 @@ Results for search: <b>{{search}}</b>
 <div style="height:50px" >
 </div>
 
+<p class="text-center" ng-show="loading">
+  <span class="fa fa-cog fa-spin fa-5x"></span>
+</p>
+
 <style>
 .panel-heading:hover {
   background-color: lightgray !important;
 }
 
 .disabled {
-  display: none;
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 </style>

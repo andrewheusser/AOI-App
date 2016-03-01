@@ -1,22 +1,38 @@
 {
-  "name": "node-authentication",
+  "name": "aoi-app",
   "main": "server.js",
-  "dependencies" : {
-    "express" : "~4.0.0",
-    "ejs" : "~0.8.5",
-    "mongoose" : "~3.8.1",
-    "passport" : "~0.1.17",
-    "passport-local" : "~0.1.6",
-    "passport-facebook" : "~1.0.2",
-    "passport-twitter" : "~1.0.2",
-    "passport-google-oauth" : "~0.1.5",
-    "connect-flash" : "~0.1.1",
-    "bcrypt-nodejs" : "latest",
-
-    "morgan": "~1.0.0",
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",
+    "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
+    "ejs": "~0.8.5",
+    "express": "~4.0.0",
+    "express-session": "~1.0.0",
     "method-override": "~1.0.0",
-    "express-session": "~1.0.0"
-  }
+    "mongoose": "~3.8.1",
+    "morgan": "~1.0.0",
+    "ngclipboard": "^1.1.1",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "passport-google-oauth": "~0.1.5",
+    "passport-local": "~0.1.6",
+    "passport-twitter": "~1.0.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "1.0.0",
+  "description": "A web app that allows the user to search pubmed, monitor specific journals and easily add papers to a shared database",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyh616/AOI-App.git"
+  },
+  "author": "Andy Heusser",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andyh616/AOI-App/issues"
+  },
+  "homepage": "https://github.com/andyh616/AOI-App#readme"
 }

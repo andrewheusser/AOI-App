@@ -198,7 +198,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
     }]);
 
-    AOIApp.controller('searchController', ['$scope', 'pubMedService', function($scope, pubMedService) {
+    AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', function($scope, $location, pubMedService) {
 
       MY_SCOPE = $scope;
 
@@ -233,6 +233,10 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
       $scope.filterFunction = function(element) {
         return element.title.match(/^Ma/)||element.title.name(/^Ma/)||element.title.year(/^Ma/) ? true : false;
+      };
+
+      $scope.navigationUrl = function (event, id) {
+                window.open('http://www.ncbi.nlm.nih.gov/pubmed/' + id, '_blank'); // in new tab
       };
 
     }]);

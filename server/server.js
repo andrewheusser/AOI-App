@@ -28,7 +28,6 @@ db.once('open', function() {
 
 // require aoi schema
 require('./app/models/aoi.js')
-
 require('./app/models/user.js')
 
 require('./config/passport')(passport); // pass passport for configuration

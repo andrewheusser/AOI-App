@@ -2,7 +2,7 @@
 AOIApp.factory('databaseService', ['$http',function($http) {
 		return {
 			get : function(searchTerm) {
-				return $http.get('/api/db/' + searchTerm + '?callback=JSON_CALLBACK');
+				return $http.get('/api/database/' + searchTerm + '?callback=JSON_CALLBACK');
 			},
 			create : function(journalData) {
 				return $http.post('/api/journals', journalData);

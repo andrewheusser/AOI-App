@@ -67,27 +67,12 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         this.source = '';
       }
 
-      // formatArticles = (data) => {
-      //   articlesArray = [];
-      //   article = {};
-      //   for (id of Object.keys(data)){
-      //     if(id !='uids'){
-      //       article[id]= new Article();
-      //       article[id].title = data[id].title;
-      //       article[id].authorsFormatted = formatAuthors(data[id]);
-      //       article[id].year = formatYear(data[id]);
-      //       article[id].id=id;
-      //       article[id].source = data[id].source;
-      //       articlesArray.push(article[id]);
-      //     }
-      //   }
-      //   return articlesArray
-      // };
       formatArticles = (data) => {
         articlesArray = [];
         // article = {};
         data = data.data.PubmedArticleSet.PubmedArticle;
         data.forEach((article)=>{
+          console.log(article)
           articleObj = new Article();
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
           articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);

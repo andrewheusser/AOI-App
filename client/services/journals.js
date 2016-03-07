@@ -1,4 +1,4 @@
-angular.module('journalService', [])
+angular.module('databaseService', [])
 
 	// super simple service
 	// each function returns a promise object

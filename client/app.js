@@ -273,50 +273,41 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
     }]);
 
-    AOIApp.controller('dbController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+    AOIApp.controller('dbController', ['$scope', '$location', '$http', 'databaseService', function($scope, $location, $http, databaseService) {
 
       MY_SCOPE = $scope;
 
-      $scope.dbSearch = "Davachi L";
+      // $scope.dbSearch = "Davachi L";
 
       $scope.$watch('dbSearch',()=>{
-        console.log("search changed!")
+        databaseService.dbSearch = $scope.dbSearch;
       });
 
       $scope.submit = () => {
         $location.path("/dbsearch");
       };
 
-      // function userCallback(data) {
-      //   console.log("return data length:",data.length);
-      //   if(data.length>0){
-      //     $scope.aois = data;
-      //   }
-      // }
-
-      // $http({
-      //   url: "http://localhost:3000/db",
-      //   method: "JSONP",
-      //   params: {
-      //     callback: userCallback,
-      //     q: $scope.dbSearch
-      //   }
-      // }).then(userCallback);
-
     }]);
 
-    AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+    AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', 'databaseService', function($scope, $location, $http, databaseService) {
 
       MY_SCOPE = $scope;
 
+      $scope.dbSearch = databaseService.dbSearch;
+
+      databaseService.get($scope.dbSearch)
+        .success((data)=>{
+          $scope.aois = data;
+        })
+
       // $scope.dbSearch = "Davachi L";
 
-      url = "http://localhost:8080/db/" + $scope.dbSearch + '?callback=JSON_CALLBACK'
-      $http.get(url)
-      .success(function(data) {
-        $scope.aois = data;
-        console.log("callback happened")
-      });
+      // url = "/api/db/" + $scope.dbSearch + '?callback=JSON_CALLBACK'
+      // $http.get(url)
+      // .success(function(data) {
+      //   $scope.aois = data;
+      //   console.log("callback happened")
+      // });
 
       $scope.openLink = function (id) {
                 link = $scope.aois[id].URL;

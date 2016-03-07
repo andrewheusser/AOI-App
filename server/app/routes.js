@@ -1,7 +1,7 @@
 // app/routes.js
 module.exports = function(app, passport, mongoose) {
 
-    app.get('/db/:search', (req, res) => {
+    app.get('/api/db/:search', (req, res) => {
       mongoose.model('aoi').find({ $text : { $search : req.params.search } }, (err, aois) =>{
         res.send(aois)
       })

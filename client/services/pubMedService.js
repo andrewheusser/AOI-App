@@ -72,7 +72,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         // article = {};
         data = data.data.PubmedArticleSet.PubmedArticle;
         data.forEach((article)=>{
-          console.log(article)
           articleObj = new Article();
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
           articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);

@@ -5,10 +5,10 @@ AOIApp.factory('databaseService', ['$http',function($http) {
 				return $http.get('/api/database/' + searchTerm + '?callback=JSON_CALLBACK');
 			},
 			create : function(journalData) {
-				return $http.post('/api/journals', journalData);
+				return $http.post('/api/database/', journalData);
 			},
 			delete : function(id) {
-				return $http.delete('/api/journals/' + id);
+				return $http.delete('/api/database/' + id);
 			}
 		}
 	}]);

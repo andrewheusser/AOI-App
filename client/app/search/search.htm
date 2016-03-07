@@ -16,7 +16,7 @@ Results for search: <b>{{search}}</b>
           </span>
           <span class="pull-right">
             <button type="button" ng-click="navigationUrl($event,article.id)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
-            <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-plus"></span></button>
+            <button type="button" class="btn btn-sm btn-warning" ng-click="addArticle($index)" ng-class="!loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-plus"></span></button>
             <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button>
           </span>
           <div style="margin-top:15px; max-width:100%">

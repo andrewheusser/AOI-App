@@ -1,7 +1,11 @@
 // app/routes.js
-module.exports = function(app, passport) {
+module.exports = function(app, passport, mongoose) {
 
-
+    app.get('/db/:search', (req, res) => {
+      mongoose.model('aoi').find({ $text : { $search : req.params.search } }, (err, aois) =>{
+        res.send(aois)
+      })
+    });
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
@@ -62,8 +66,8 @@ module.exports = function(app, passport) {
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/', // redirect to the secure profile section
-        failureRedirect : '#/login', // redirect back to the signup page if there is an error
+        successRedirect : '/home', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 

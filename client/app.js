@@ -1,11 +1,16 @@
 var AOIApp = angular.module('AOIApp', ['ngRoute', 'ngResource']);
 
-// ROUTES
+// routes
 AOIApp.config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
 
   .when('/', {
+    templateUrl: 'pages/login.htm',
+    controller: 'loginController'
+  })
+
+  .when('/home', {
     templateUrl: 'pages/home.htm',
     controller: 'homeController'
   })
@@ -27,7 +32,12 @@ AOIApp.config(function ($routeProvider, $locationProvider) {
 
   .when('/db', {
     templateUrl: 'pages/db.htm',
-    controller: 'searchController'
+    controller: 'dbController'
+  })
+
+  .when('/dbsearch', {
+    templateUrl: 'pages/db_results.htm',
+    controller: 'dbSearchController'
   });
 
   $locationProvider.html5Mode(true);
@@ -48,7 +58,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         db: "pubmed",
         retmode: "json",
         term: search,
-        retmax: "100"
+        retmax: "1000"
       }).$promise.then((data)=>{return data.esearchresult.idlist})
     };
 
@@ -76,7 +86,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         }
       })
       .then((result)=>{
-        console.log(result)
         return result
       }, (err)=>{
         console.log("Couldn't get articles!")
@@ -126,17 +135,26 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         // article = {};
         data = data.data.PubmedArticleSet.PubmedArticle;
         data.forEach((article)=>{
-          console.log(article)
           articleObj = new Article();
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
           articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
           articleObj.year = article.PubmedData.History.PubMedPubDate[0].Year;
           articleObj.id=article.MedlineCitation.PMID.__text;
           articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
-          articleObj.abstract = (typeof article.MedlineCitation.Article.Abstract === 'undefined') ? 'No Abstract Found' : article.MedlineCitation.Article.Abstract.AbstractText;
+          articleObj.abstract = formatAbstract(article);
           articlesArray.push(articleObj);
         });
         return articlesArray
+      };
+
+      formatAbstract = (article) => {
+         if (typeof article.MedlineCitation.Article.Abstract === 'undefined'){
+          return 'No Abstract Found'
+        } else if (typeof article.MedlineCitation.Article.Abstract.AbstractText === 'object'){
+           return article.MedlineCitation.Article.Abstract.AbstractText.__text;
+        } else {
+          return article.MedlineCitation.Article.Abstract.AbstractText
+        }
       };
 
       formatAuthors = (authors) => {
@@ -158,10 +176,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       loadMore = (articles) => {
         return new Promise((res,rej)=>{
           moreIds = articles.searchResults.slice(articles.loaded+1,articles.loaded+1+articles.numload);
-          console.log(moreIds)
           getAbstracts(moreIds)
           .then((data)=>{
-            console.log(data)
             formattedNewArticles = formatArticles(data);
             formattedNewArticles.forEach((newArticle)=>{
               articles.push(newArticle)
@@ -184,6 +200,10 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
     }]);
 
     // CONTROLLERS
+    AOIApp.controller('loginController', ['$scope', function($scope) {
+
+    }]);
+
     AOIApp.controller('homeController', ['$scope', '$location', 'pubMedService', function($scope, $location, pubMedService) {
 
       $scope.search = pubMedService.search;
@@ -224,7 +244,9 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           $scope.articles.loaded = loaded;
           $scope.loading = false;
           $scope.$apply();
-        })
+        }, (err) => {
+          console.log("Couldn't get articles!")
+        });
       });
 
       $scope.$watch('search',()=>{
@@ -241,7 +263,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
     }]);
 
-    // CONTROLLERS
     AOIApp.controller('myJournalsController', ['$scope', 'pubMedService', function($scope, pubMedService) {
 
       $scope.journals = [
@@ -251,3 +272,56 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       ]
 
     }]);
+
+    AOIApp.controller('dbController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+
+      MY_SCOPE = $scope;
+
+      $scope.dbSearch = "Davachi L";
+
+      $scope.$watch('dbSearch',()=>{
+        console.log("search changed!")
+      });
+
+      $scope.submit = () => {
+        $location.path("/dbsearch");
+      };
+
+      // function userCallback(data) {
+      //   console.log("return data length:",data.length);
+      //   if(data.length>0){
+      //     $scope.aois = data;
+      //   }
+      // }
+
+      // $http({
+      //   url: "http://localhost:3000/db",
+      //   method: "JSONP",
+      //   params: {
+      //     callback: userCallback,
+      //     q: $scope.dbSearch
+      //   }
+      // }).then(userCallback);
+
+    }]);
+
+    AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+
+      MY_SCOPE = $scope;
+
+      // $scope.dbSearch = "Davachi L";
+
+      url = "http://localhost:8080/db/" + $scope.dbSearch + '?callback=JSON_CALLBACK'
+      $http.get(url)
+      .success(function(data) {
+        $scope.aois = data;
+        console.log("callback happened")
+      });
+
+      $scope.openLink = function (id) {
+                link = $scope.aois[id].URL;
+                window.open(link); // in new tab
+      };
+}]);
+
+    // }]);

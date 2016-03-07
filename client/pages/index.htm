@@ -26,8 +26,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="dist/xml2json.min.js"></script>
+
+  <!--  load in all the app files -->
   <script src="app.js"></script>
+  <script src="routes/routes.js"></script>
+  <script src="app/login/login.js"></script>
+  <script src="app/home/home.js"></script>
+  <script src="app/database/database.js"></script>
+  <script src="app/dbsearch/databaseSearch.js"></script>
+  <script src="app/myjournals/myjournals.js"></script>
+  <script src="app/search/search.js"></script>
+
   <script src="services/databaseService.js"></script>
+  <script src="services/pubMedService.js"></script>
+
 </head>
 <body>
 
@@ -40,7 +52,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/home">PubMed</a></li>
           <li><a href="/myjournals">My Journals</a></li>
-          <li><a href="/db" >Database</a></li>
+          <li><a href="/database" >Database</a></li>
           <li style="margin-right:20px"><a href="/login" >Login</a></li>
           <!-- <li><a href="#" style="margin-right:30px; margin-top:2px"><i class="fa fa-home"></i><span class="glyphicon glyphicon-cog"></span></a></li> -->
           <!-- <li class="dropdown" id="menuLogin">

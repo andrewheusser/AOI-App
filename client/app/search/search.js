@@ -11,7 +11,9 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
 
   // add in database services
   $scope.addArticle = (id) => {
-    ind = findPMID($scope.articles,id)
+    ind = findIndex($scope.articles,id)
+    console.log(ind)
+    console.log($scope.articles[ind])
     article = {
       Title: $scope.articles[ind].title,
       Authors: $scope.articles[ind].authorsFormatted,
@@ -22,7 +24,7 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
       PMID: $scope.articles[ind].PMID,
     }
     databaseService.create(article)
-    dbChecker_single(id)
+    dbChecker_single(ind)
     };
 
 

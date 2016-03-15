@@ -1,4 +1,4 @@
-AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', 'databaseService', function($scope, $location, pubMedService, databaseService) {
+AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', 'databaseService', 'userService', function($scope, $location, pubMedService, databaseService, userService) {
 
   // for easy debugging
   MY_SCOPE = $scope;
@@ -11,21 +11,27 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
 
   // add in database services
   $scope.addArticle = (id) => {
-    console.log($scope.articles[id])
+    ind = findPMID($scope.articles,id)
     article = {
-      Title: $scope.articles[id].title,
-      Authors: $scope.articles[id].authorsFormatted,
-      Abstract: $scope.articles[id].abstract,
-      Journal: $scope.articles[id].source,
-      Year: $scope.articles[id].year,
-      URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.articles[id].id
+      Title: $scope.articles[ind].title,
+      Authors: $scope.articles[ind].authorsFormatted,
+      Abstract: $scope.articles[ind].abstract,
+      Journal: $scope.articles[ind].source,
+      Year: $scope.articles[ind].year,
+      URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.articles[ind].PMID,
+      PMID: $scope.articles[ind].PMID,
     }
     databaseService.create(article)
-  }
+    dbChecker_single(id)
+    };
+
 
   // add in pubmed services
   $scope.search = pubMedService.search;
-  $scope.loadMore = pubMedService.loadMore;
+  $scope.loadMore = (ids)=>{
+    pubMedService.loadMore(ids)
+    dbChecker(0)
+  };
 
   pubMedService.getIds($scope.search)
   .then((results) => {
@@ -37,6 +43,37 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
       $scope.articles.loaded = loaded;
       $scope.loading = false;
       $scope.$apply();
+
+      // Check to see if article is in database
+      dbChecker = (i) => {
+        if(i < $scope.articles.length){
+          a = $scope.articles[i].id || $scope.articles[i].PMID
+          databaseService.getMatch($scope.articles[i].PMID)
+            .success((data)=>{
+              if (data.length){
+                $scope.articles[i].inDB = true;
+              } else {
+                $scope.articles[i].inDB = false;
+              }
+              dbChecker(i+1)
+            })
+        }
+      };
+      dbChecker(0)
+
+      // Check to see if article is in database
+      dbChecker_single = (i) => {
+          databaseService.getMatch($scope.articles[i].PMID)
+            .success((data)=>{
+              console.log(data)
+              if (data.length){
+                $scope.articles[i].inDB = true;
+              } else {
+                $scope.articles[i].inDB = false;
+              }
+            })
+      };
+
     }, (err) => {
       console.log("Couldn't get articles!")
     });
@@ -50,6 +87,17 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
   // open link when it is clicked
   $scope.navigationUrl = function (event, id) {
             window.open('http://www.ncbi.nlm.nih.gov/pubmed/' + id, '_blank'); // in new tab
+  };
+
+  findIndex = (arr,id) =>{
+    counter=0
+    arr.forEach((article)=>{
+      if(article.PMID==id){
+        index=counter
+      }
+      counter+=1
+    });
+    return index
   };
 
 }]);

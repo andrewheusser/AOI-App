@@ -61,7 +61,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       Article = function(){
         this.title = '';
         this.year = '';
-        this.id = '';
+        this.PMID = '';
         this.authorsFormatted = '';
         this.abstract = 'TEST';
         this.source = '';
@@ -76,7 +76,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
           articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
           articleObj.year = article.PubmedData.History.PubMedPubDate[0].Year;
-          articleObj.id=article.MedlineCitation.PMID.__text;
+          articleObj.PMID=article.MedlineCitation.PMID.__text;
           articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
           articleObj.abstract = formatAbstract(article);
           articlesArray.push(articleObj);

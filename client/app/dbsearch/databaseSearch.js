@@ -4,11 +4,14 @@ AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', 'databa
 
   $scope.dbSearch = databaseService.dbSearch;
   $scope.loading = true;
+  $scope.showAbstract = false;
 
   databaseService.get($scope.dbSearch)
     .success((data)=>{
       $scope.aois = data;
       $scope.loading = false;
+    }).catch((err)=>{
+      console.log(err)
     })
 
   // $scope.dbSearch = "Davachi L";

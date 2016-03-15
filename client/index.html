@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" ng-app="AOIApp">
+<html lang="en-us">
 <head>
   <title>AOI App</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -24,35 +24,33 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="dist/xml2json.min.js"></script>
 
-  <!--  load in all the app files -->
+  <!--  load in app and routes -->
   <script src="app.js"></script>
   <script src="routes/routes.js"></script>
+
+  <!--  load in services -->
+  <script src="services/databaseService.js"></script>
+  <script src="services/pubMedService.js"></script>
+  <script src="services/userService.js"></script>
+
+  <!--  load in controllers -->
   <script src="app/login/login.js"></script>
   <script src="app/home/home.js"></script>
   <script src="app/database/database.js"></script>
   <script src="app/dbsearch/databaseSearch.js"></script>
   <script src="app/myjournals/myjournals.js"></script>
   <script src="app/search/search.js"></script>
-  <script src="services/databaseService.js"></script>
-  <script src="services/pubMedService.js"></script>
+
+  <!--  components -->
+  <script src="components/navbar/navbar.controller.js"></script>
+  <script src="components/navbar/navbar.js"></script>
+
 
 </head>
-<body>
+<body ng-app="AOIApp">
 
-  <header>
-    <nav class="navbar navbar-default">
-      <div>
-        <div class="navbar-header">
-          <a href="/" class="navbar-logo pull-left"><img style="width:50%; margin-top:15px; margin-left:30px" src="./assets/davachi.png"></a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/home">PubMed</a></li>
-          <li><a href="/myjournals">My Journals</a></li>
-          <li><a href="/database" >Database</a></li>
-          <li style="margin-right:20px"><a href="/login" >Login</a></li>
-        </ul>
-      </div>
-    </nav>
+  <header id="nav" ng-controller="navbarController">
+      <navbar></navbar>
   </header>
 
   <div class="container">

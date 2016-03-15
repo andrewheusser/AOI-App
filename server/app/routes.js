@@ -9,6 +9,12 @@ module.exports = function(app, passport, mongoose) {
     })
   });
 
+  app.get('/api/database/match/:search', (req, res) => {
+    Aoi.find({PMID: req.params.search}, (err, aois) =>{
+      res.send(aois)
+    })
+  });
+
   app.post('/api/database/:search', (req, res) => {
     aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{
       res.send(aois)
@@ -22,6 +28,9 @@ module.exports = function(app, passport, mongoose) {
       Abstract: req.body.Abstract,
       Authors: req.body.Authors,
       URL: req.body.URL,
+      Year: req.body.Year,
+      User: req.body.User,
+      PMID: req.body.PMID,
     })
     aoi.save(function (err, post) {
       if (err) { return next(err) }
@@ -87,11 +96,27 @@ module.exports = function(app, passport, mongoose) {
   // }));
 
   // process the login form
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/home', // redirect to the secure profile section
-    failureRedirect : '/login', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-  }));
+  // app.post('/login', passport.authenticate('local-login', {
+  //   successRedirect : '/loginSuccess', // redirect to the secure profile section
+  //   failureRedirect : '/loginFailure', // redirect back to the signup page if there is an error
+  //   failureFlash : true, // allow flash messages
+  // }));
+
+  // app.get('/login', function(req, res) {
+  //   res.redirect('/home');
+  // });
+  //
+  // app.get('/home', function(req, res) {
+  //   res.redirect('/');
+  // });
+
+  app.post('/api/auth/login',
+  passport.authenticate('local-login', { failureRedirect: '/login' }),
+  function(req, res) {
+    // res.redirect('/home', { user : req });
+    res.send(req.user);
+  });
+
 
   app.get('*', function(req, res) {
     res.sendfile('./client/index.html'); // load the single view file (angular will handle the page changes on the front-end)

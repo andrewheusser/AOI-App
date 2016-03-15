@@ -9,19 +9,17 @@ Results for search: <b>{{dbSearch}}</b>
 <div ng-repeat="aoi in aois | filter:query | orderBy:'-year'">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a style="text-decoration:none" class="">
         <h4>
           <span>
-            <a class="btn btn-sm btn-success">XXXX</a>
+            <a class="btn btn-sm btn-success">{{aoi.Year}}</a>
           </span>
           <span class="pull-right">
             <button type="button" ng-click="openLink($index)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
           </span>
           <div style="margin-top:15px; max-width:100%">
-            {{aoi.Title}}
+            <b>{{aoi.Title}}</b>
           </div>
         </h4>
-      </a>
     </div>
     <div class="panel-body">
       {{aoi.Authors}}. <b><i> {{aoi.Journal}}</i></b>
@@ -50,9 +48,9 @@ Results for search: <b>{{dbSearch}}</b>
 </p>
 
 <style>
-.panel-heading:hover {
+/*.panel-heading:hover {
   background-color: lightgray !important;
-}
+}*/
 
 .disabled {
   opacity: 0.65;

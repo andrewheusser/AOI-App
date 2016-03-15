@@ -7,6 +7,8 @@ var aoiSchema = new Schema({
   Abstract:   String,
   URL:  String,
   Year: String,
+  User: String,
+  PMID: String,
 });
 
 // create the model for users and expose it to our app

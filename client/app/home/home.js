@@ -1,6 +1,7 @@
-AOIApp.controller('homeController', ['$scope', '$location', 'pubMedService', function($scope, $location, pubMedService) {
+AOIApp.controller('homeController', ['$scope', '$location', 'pubMedService', 'userService', function($scope, $location, pubMedService, userService) {
 
   $scope.search = pubMedService.search;
+  $scope.user = userService.user;
 
   $scope.$watch('search', function(){
     return pubMedService.search = $scope.search;
@@ -9,5 +10,7 @@ AOIApp.controller('homeController', ['$scope', '$location', 'pubMedService', fun
   $scope.submit = () => {
     $location.path("/search");
   };
+
+  MY_SCOPE = $scope;
 
 }]);

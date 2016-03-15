@@ -3,8 +3,8 @@ AOIApp.config(function ($routeProvider, $locationProvider) {
   $routeProvider
 
   .when('/', {
-    templateUrl: 'app/login/login.htm',
-    controller: 'loginController'
+    templateUrl: 'app/home/home.htm',
+    controller: 'homeController'
   })
 
   .when('/home', {

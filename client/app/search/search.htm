@@ -15,12 +15,12 @@ Results for search: <b>{{search}}</b>
             <a class="btn btn-sm btn-success">{{article.year}}</a>
           </span>
           <span class="pull-right">
-            <button type="button" ng-click="navigationUrl($event,article.id)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
-            <button type="button" class="btn btn-sm btn-warning" ng-click="addArticle($index)" ng-class="!loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-plus"></span></button>
-            <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button>
+            <button type="button" ng-click="navigationUrl($event,article.PMID)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
+            <button type="button" class="btn btn-sm btn-warning" ng-click="addArticle(article.PMID)" ng-class="article.inDB ? 'btn-success disabled' : 'btn-warning not-disabled'"><span ng-class="article.inDB ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-plus'"></span></button>
+            <!-- <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button> -->
           </span>
           <div style="margin-top:15px; max-width:100%">
-            {{article.title}}
+            <b>{{article.title}}</b>
           </div>
         </h4>
       </a>
@@ -35,7 +35,6 @@ Results for search: <b>{{search}}</b>
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
         </button>
-        <span style="margin-top:15px" ng-class="!articleInDB ? 'glyphicon glyphicon-ok pull-right' : ''"></span>
       </div>
   </div>
 </div>
@@ -53,9 +52,9 @@ Results for search: <b>{{search}}</b>
 </p>
 
 <style>
-.panel-heading:hover {
+/*.panel-heading:hover {
   background-color: lightgray !important;
-}
+}*/
 
 .disabled {
   opacity: 0.65;

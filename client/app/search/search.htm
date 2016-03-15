@@ -1,0 +1,64 @@
+<div>
+<a href="/home" class="btn btn-danger" style="margin-right:20px">Back</a>
+Results for search: <b>{{search}}</b>
+<div class="form-group pull-right">
+    <input type="text" ng-model="query" class="form-control" placeholder="Filter by"/>
+</div>
+<div>
+<hr />
+<div ng-repeat="article in articles | filter:query | orderBy:'-year'">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a style="text-decoration:none" class="">
+        <h4>
+          <span>
+            <a class="btn btn-sm btn-success">{{article.year}}</a>
+          </span>
+          <span class="pull-right">
+            <button type="button" ng-click="navigationUrl($event,article.PMID)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
+            <button type="button" class="btn btn-sm btn-warning" ng-click="addArticle(article.PMID)" ng-class="article.inDB ? 'btn-success disabled' : 'btn-warning not-disabled'"><span ng-class="article.inDB ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-plus'"></span></button>
+            <!-- <button type="button" class="btn btn-sm btn-warning" ng-class="loggedIn ? 'not-disabled' : 'disabled'"><span class="glyphicon glyphicon-envelope"></span></button> -->
+          </span>
+          <div style="margin-top:15px; max-width:100%">
+            <b>{{article.title}}</b>
+          </div>
+        </h4>
+      </a>
+    </div>
+    <div class="panel-body">
+      {{article.authorsFormatted }}. <b><i> {{article.source}}</i></b>
+    </div>
+      <div class="panel-body">
+        <div ng-show="showAbstract">
+            <p>{{article.abstract}}</p>
+        </div>
+        <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
+          <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
+        </button>
+      </div>
+  </div>
+</div>
+<center>
+  <button type="button" class="btn btn-xl btn-info" ng-class="articles.loaded>=articles.searchResults.length ? 'disabled': ''" ng-hide="loading" ng-click="loadMore(articles)">
+    <a style="color:white; text-decoration:none" href="/search"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.loaded>=articles.searchResults.length ? "That's all folks" : "Load More"}}</a>
+  </button>
+</center>
+
+<div style="height:50px" >
+</div>
+
+<p class="text-center" ng-show="loading">
+  <span class="fa fa-cog fa-spin fa-5x"></span>
+</p>
+
+<style>
+/*.panel-heading:hover {
+  background-color: lightgray !important;
+}*/
+
+.disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+</style>

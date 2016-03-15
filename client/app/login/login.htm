@@ -1,0 +1,44 @@
+<div style="height:50px"></div>
+<div class="container">
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="col-sm-5"></span> Login</h1>
+
+    <!-- show any messages that come back with authentication -->
+    <!-- <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %> -->
+
+    <!-- LOGIN FORM -->
+    <form ng-submit="loginUser()">
+        <div class="form-group">
+            <label>Email</label>
+            <input ng-model="email" type="text" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input ng-model="password" type="password" class="form-control">
+        </div>
+        <input type="submit" class="btn btn-primary btn-lg" value="Login"/>
+    </form>
+
+</div>
+</div>
+
+<!-- <div class="col-md-4">
+  <h1>Login</h2>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+  <form class="form" ng-submit="login()">
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="form-control" name="username" ng-model="loginForm.username" required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+        <input type="password" class="form-control" name="password" ng-model="loginForm.password" required>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>
+      </div>
+  </form>
+</div> -->

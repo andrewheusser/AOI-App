@@ -1,7 +1,7 @@
 # AOI-App
 Articles of interest App: This web application wraps pubmed and adds functionality such as quick add to a database and tracking of specific journals
 
-![alt text](http://github.com/andrewheusser/AOI-App/screenshot.png "Pubmed search example")
+![alt text](https://github.com/andrewheusser/AOI-App/blob/master/screenshot.png "Pubmed search example")
 
 
 To run:

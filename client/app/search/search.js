@@ -23,8 +23,10 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
       URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.articles[ind].PMID,
       PMID: $scope.articles[ind].PMID,
     }
-    databaseService.create(article)
-    dbChecker_single(ind)
+    databaseService.create(article).success(()=>{
+      dbChecker_single(ind)
+    })
+
     };
 
 
@@ -78,6 +80,7 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
 
     }, (err) => {
       console.log("Couldn't get articles!")
+
     });
   });
 

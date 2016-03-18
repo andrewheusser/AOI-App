@@ -9,6 +9,6 @@ angular.module('AOIApp')
     {title: "Learning and Memory"},
   ]
 
-  
+
 
 }]);

@@ -15,6 +15,13 @@ module.exports = function(app, passport, mongoose) {
     })
   });
 
+  app.get('/api/database/recent/:num', (req, res) => {
+    Aoi.find().sort({_id:-1}).limit(req.params.num).exec((err, aois) =>{
+      console.log(aois)
+      res.send(aois)
+    })
+  });
+
   app.post('/api/database/:search', (req, res) => {
     aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{
       res.send(aois)

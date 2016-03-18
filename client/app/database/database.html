@@ -1,14 +1,7 @@
-<div style="height:100px"></div>
-<center>
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <h4>Search for articles in <b>Database:</b></h4>
-        <form ng-submit="submit()">
-          <div class="form-group">
-            <input type="text" ng-model="dbSearch" class="form-control"/>
-          </div>
-          <input type="submit" class="btn btn-primary btn-lg" value="Search"/>
-        </form>
-    </div>
-</div>
-</center>
+<p class="pull-right" ng-show="user.loggedIn">Welcome <b>{{user.firstname}}</b>!</p>
+<div style="height:20px"></div>
+<ul class="nav nav-tabs">
+  <li role="presentation" ui-sref-active="active"><a ui-sref="database.recent"><b>Recently Added</b></a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref="database.search"><b>Search</b></a></li>
+</ul>
+<ui-view/>

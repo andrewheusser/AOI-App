@@ -4,6 +4,9 @@ angular.module('AOIApp')
 			get : function(searchTerm) {
 				return $http.get('/api/database/' + searchTerm + '?callback=JSON_CALLBACK');
 			},
+			getRecent : function(num) {
+				return $http.get('/api/database/recent/' + num + '?callback=JSON_CALLBACK');
+			},
 			getMatch : function(searchTerm) {
 				return $http.get('/api/database/match/' + searchTerm + '?callback=JSON_CALLBACK');
 			},

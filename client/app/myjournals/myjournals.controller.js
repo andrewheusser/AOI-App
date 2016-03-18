@@ -3,10 +3,4 @@ angular.module('AOIApp')
 
   $scope.user = userService.user;
 
-  $scope.journals = [
-    {title: "Current Biology"},
-    {title: "Nature Neuroscience"},
-    {title: "Learning and Memory"},
-  ]
-
 }]);

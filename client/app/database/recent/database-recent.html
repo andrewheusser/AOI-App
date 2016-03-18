@@ -1,32 +1,42 @@
-<div>
-<a href="/database" class="btn btn-danger" style="margin-right:20px">Back</a>
-Results for search: <b>{{dbSearch}}</b>
-<div class="form-group pull-right">
+<div style="height:10px"></div>
+
+<div class="form-group pull-right" style="margin-left:10px">
     <input type="text" ng-model="query" class="form-control" placeholder="Filter by"/>
 </div>
+<div class="btn-group pull-right" data-toggle="buttons">
+  <label class="btn btn-primary active" ng-click="display20()">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> 20
+  </label>
+  <label class="btn btn-primary" ng-click="display50()">
+    <input type="radio" name="options" id="option2" autocomplete="off"> 50
+  </label>
+  <label class="btn btn-primary" ng-click="display100()">
+    <input type="radio" name="options" id="option3" autocomplete="off"> 100
+  </label>
+</div>
+<div style="height:100px"></div>
 <div>
-<hr />
-<div ng-repeat="aoi in aois | filter:query | orderBy:'-year'">
+<div ng-repeat="recentAoi in recentAois | filter:query | orderBy:'-year'">
   <div class="panel panel-default">
     <div class="panel-heading">
         <h4>
           <span>
-            <a class="btn btn-sm btn-success">{{aoi.Year}}</a>
+            <a class="btn btn-sm btn-success">{{recentAoi.Year}}</a>
           </span>
           <span class="pull-right">
             <button type="button" ng-click="openLink($index)" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-link"></span></button>
           </span>
           <div style="margin-top:15px; max-width:100%">
-            <b>{{aoi.Title}}</b>
+            <b>{{recentAoi.Title}}</b>
           </div>
         </h4>
     </div>
     <div class="panel-body">
-      {{aoi.Authors}}. <b><i> {{aoi.Journal}}</i></b>
+      {{recentAoi.Authors}}. <b><i> {{recentAoi.Journal}}</i></b>
     </div>
       <div class="panel-body">
         <div ng-show="showAbstract">
-            <p>{{aoi.Abstract}}</p>
+            <p>{{recentAoi.Abstract}}</p>
         </div>
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>

@@ -22,7 +22,8 @@ angular.module('AOIApp')
     user: {
       email: '',
       password: '',
-      loggedIn: false
+      loggedIn: false,
+      myJournals: ''
     }
   }
 }]);

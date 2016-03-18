@@ -1,42 +1,7 @@
-<div class="row spacer" style="margin-top:50px"></div>
-<center>
-  <div class="container">
-    <table class="table table-bordered connect-table">
-      <tr>
-        <th class="table-header">Your Journals are:</th>
-      </tr>
-      <tr ng-repeat="journal in journals">
-        <td>
-          {{journal.title}}
-            <a ng-click="removeJournal()"class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></a>
-        </td>
-      </tr>
-    </table>
-    <center>
-    <div class="form-inline" >
-            <div class="form-group" style="overflow:auto">
-                <input type="text" ng-model="search" class="form-control" />
-                <a ng-click="addJournal()" type="button" class="btn btn-primary btn-md">Add</a>
-            </div>
-    </div>
-    </center>
-  </div>
-</center>
-
-<style>
-.selected {
-  background-color: lightblue;
-}
-
-.table-header {
-  color: white;
-  background-color: #2c3e50;
-  text-align:center;
-  height:20px
-}
-
-.connect-table {
-  width: 300px;
-  height: auto;
-}
-</style>
+<p class="pull-right" ng-show="user.loggedIn">Welcome <b>{{user.firstname}}</b>!</p>
+<div style="height:20px"></div>
+<ul class="nav nav-tabs">
+  <li role="presentation" ui-sref-active="active"><a ui-sref="myjournals.recent"><b>Recently Published</b></a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref="myjournals.settings"><b>Settings</b></a></li>
+</ul>
+<ui-view/>

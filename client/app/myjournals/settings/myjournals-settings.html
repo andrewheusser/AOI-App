@@ -1,0 +1,43 @@
+<div class="row spacer" style="margin-top:50px"></div>
+<center>
+  <div class="container">
+    <table class="table table-bordered connect-table">
+      <tr>
+        <th class="table-header">Your Journals are:</th>
+      </tr>
+      <tr ng-repeat="journal in journals">
+        <td>
+          {{journal.fullTitle}}
+            <button class="btn btn-sm pull-right" ng-click="removeJournal($index)"class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></button>
+        </td>
+      </tr>
+    </table>
+    <center>
+    <form ng-submit="addJournal(addedjournal)">
+      <div class="form-inline">
+        <input type="text" ng-model="addedjournal" class="form-control"/>
+
+      <input type="submit" class="btn btn-primary btn-sm" value="Add"/>
+      </div>
+    </form>
+    </center>
+  </div>
+</center>
+
+<style>
+.selected {
+  background-color: lightblue;
+}
+
+.table-header {
+  color: white;
+  background-color: #2c3e50;
+  text-align:center;
+  height:20px
+}
+
+.connect-table {
+  width: 300px;
+  height: auto;
+}
+</style>

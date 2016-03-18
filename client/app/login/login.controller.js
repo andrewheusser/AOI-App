@@ -1,6 +1,7 @@
 angular.module('AOIApp')
   .controller('loginCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
 
+  $scope.user = userService.user;
   MY_SCOPE = $scope;
 
   $scope.loginUser = () => {

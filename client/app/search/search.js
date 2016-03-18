@@ -4,6 +4,7 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
   MY_SCOPE = $scope;
 
   // set some variables
+  $scope.user = userService.user;
   $scope.showAbstract = false;
   $scope.loading = true;
   var numload = 20;

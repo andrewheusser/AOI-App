@@ -7,12 +7,9 @@ AOIApp.controller('loginController', ['$scope', '$location', 'userService', func
       email: $scope.email,
       password: $scope.password
   }).success((data)=>{
-    $scope.$emit('user-signed-in', data)
     userService.user = data.local;
     userService.user.loggedIn = true;
     $location.path("/home");
-
   })};
-
 
 }]);

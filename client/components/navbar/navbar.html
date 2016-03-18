@@ -5,10 +5,10 @@
       <li><p style="color:white; margin-top:20px" ng-show="user.loggedIn">Welcome <b>{{user.firstname}}</b>!</p></li>
     </ul>
     <ul class="nav navbar-nav pull-right">
-      <li><a ui-sref="home">PubMed</a></li>
-      <li><a ui-sref="myjournals.recent">My Journals</a></li>
-      <li><a ui-sref="database.recent" >Database</a></li>
-      <li style="margin-right:20px"><a ui-sref="login" >Login</a></li>
+      <li ng-class="{active:isActive('/home')}"><a ui-sref="home">PubMed</a></li>
+      <li ng-class="{active:isActive('/myjournals')}"><a ui-sref="myjournals.recent">My Journals</a></li>
+      <li ng-class="{active:isActive('/database')}"><a ui-sref="database.recent" >Database</a></li>
+      <li ng-class="{active:isActive('/login')}" style="margin-right:20px"><a ui-sref="login" >Login</a></li>
     </ul>
   </div>
 </nav>

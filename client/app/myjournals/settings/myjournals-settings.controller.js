@@ -1,5 +1,5 @@
 angular.module('AOIApp')
-  .controller('myjournalsCtrl', ['$scope', 'pubMedService', 'userService', function($scope, pubMedService, userService) {
+  .controller('myjournalsSettingsCtrl', ['$scope', 'pubMedService', 'userService', function($scope, pubMedService, userService) {
 
   $scope.user = userService.user;
 
@@ -8,7 +8,5 @@ angular.module('AOIApp')
     {title: "Nature Neuroscience"},
     {title: "Learning and Memory"},
   ]
-
-  
 
 }]);

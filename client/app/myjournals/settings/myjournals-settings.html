@@ -7,18 +7,19 @@
       </tr>
       <tr ng-repeat="journal in journals">
         <td>
-          {{journal.title}}
-            <a ng-click="removeJournal()"class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></a>
+          {{journal.fullTitle}}
+            <button class="btn btn-sm pull-right" ng-click="removeJournal($index)"class="pull-right" style="text-decoration:none"><span class="glyphicon glyphicon-remove"></span></button>
         </td>
       </tr>
     </table>
     <center>
-    <div class="form-inline" >
-            <div class="form-group" style="overflow:auto">
-                <input type="text" ng-model="search" class="form-control" />
-                <a ng-click="addJournal()" type="button" class="btn btn-primary btn-md">Add</a>
-            </div>
-    </div>
+    <form ng-submit="addJournal(addedjournal)">
+      <div class="form-inline">
+        <input type="text" ng-model="addedjournal" class="form-control"/>
+
+      <input type="submit" class="btn btn-primary btn-sm" value="Add"/>
+      </div>
+    </form>
     </center>
   </div>
 </center>

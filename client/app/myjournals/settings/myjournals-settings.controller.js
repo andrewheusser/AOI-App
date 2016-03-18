@@ -1,12 +1,17 @@
 angular.module('AOIApp')
-  .controller('myjournalsSettingsCtrl', ['$scope', 'pubMedService', 'userService', function($scope, pubMedService, userService) {
+  .controller('myjournalsSettingsCtrl', ['$scope', 'userService', function($scope, userService) {
 
   $scope.user = userService.user;
 
-  $scope.journals = [
-    {title: "Current Biology"},
-    {title: "Nature Neuroscience"},
-    {title: "Learning and Memory"},
-  ]
+  $scope.journals = userService.user.myjournals;
+
+  // $scope.addJournal = () => {
+  //   $scope.journals.push({fullTitle:$scope.addedjournal,
+  //   shortTitle:""})
+  // };
+  //
+  // $scope.removeJournal = (index) =>{
+  //   $scope.journals.splice(index,1)
+  // };
 
 }]);

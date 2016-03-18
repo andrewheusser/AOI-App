@@ -44,6 +44,12 @@ module.exports = function(app, passport, mongoose) {
       res.json(201, post)
     })
   })
+
+  // app.get('/api/journals', (req, res) => {
+  //   Aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{
+  //     res.send(aois)
+  //   })
+  // });
   // =====================================
   // HOME PAGE (with login links) ========
   // =====================================

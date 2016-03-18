@@ -1,4 +1,5 @@
-AOIApp.factory('userService', ['$http',function($http) {
+angular.module('AOIApp')
+  .factory('userService', ['$http',function($http) {
   return {
     load: function() {
       return $http.get('/api/auth');

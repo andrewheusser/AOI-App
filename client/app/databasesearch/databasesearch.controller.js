@@ -1,10 +1,12 @@
-AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', 'databaseService', function($scope, $location, $http, databaseService) {
+angular.module('AOIApp')
+  .controller('databasesearchCtrl', ['$scope', '$location', '$http', 'databaseService', 'userService', function($scope, $location, $http, databaseService, userService) {
 
   MY_SCOPE = $scope;
 
   $scope.dbSearch = databaseService.dbSearch;
   $scope.loading = true;
   $scope.showAbstract = false;
+  $scope.user = userService.user;
 
   databaseService.get($scope.dbSearch)
     .success((data)=>{

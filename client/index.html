@@ -15,9 +15,21 @@
   }
   </style>
 
+</head>
+<body ng-app="AOIApp">
+
+  <header id="nav">
+      <navbar></navbar>
+  </header>
+
+  <div class="container">
+    <div ui-view></div>
+  </div>
+
   <!-- load in remote js files via CDN -->
-  <script src="https://code.angularjs.org/1.3.0-rc.2/angular.min.js"></script>
-  <script src="https://code.angularjs.org/1.3.0-rc.2/angular-route.min.js"></script>
+  <script src="https://code.angularjs.org/1.5.0-rc.0/angular.min.js"></script>
+  <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+  <!-- <script src="https://code.angularjs.org/1.3.0-rc.2/angular-route.min.js"></script> -->
   <script src="https://code.angularjs.org/1.3.0-rc.2/angular-resource.min.js"></script>
   <script src="https://code.angularjs.org/1.3.0-rc.2/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -25,37 +37,36 @@
   <script src="dist/xml2json.min.js"></script>
 
   <!--  load in app and routes -->
-  <script src="app.js"></script>
-  <script src="routes/routes.js"></script>
+  <script src="app/app.js"></script>
+  <!-- <script src="routes/routes.js"></script> -->
 
   <!--  load in services -->
   <script src="services/databaseService.js"></script>
   <script src="services/pubMedService.js"></script>
   <script src="services/userService.js"></script>
 
-  <!--  load in controllers -->
+  <!--  load in controllers and states-->
   <script src="app/login/login.js"></script>
+  <script src="app/login/login.controller.js"></script>
+
   <script src="app/home/home.js"></script>
+  <script src="app/home/home.controller.js"></script>
+
   <script src="app/database/database.js"></script>
-  <script src="app/dbsearch/databaseSearch.js"></script>
+  <script src="app/database/database.controller.js"></script>
+
+  <script src="app/databasesearch/databasesearch.js"></script>
+  <script src="app/databasesearch/databasesearch.controller.js"></script>
+
   <script src="app/myjournals/myjournals.js"></script>
-  <script src="app/search/search.js"></script>
+  <script src="app/myjournals/myjournals.controller.js"></script>
+
+  <script src="app/pubmedsearch/pubmedsearch.js"></script>
+  <script src="app/pubmedsearch/pubmedsearch.controller.js"></script>
 
   <!--  components -->
-  <script src="components/navbar/navbar.controller.js"></script>
   <script src="components/navbar/navbar.js"></script>
-
-
-</head>
-<body ng-app="AOIApp">
-
-  <header id="nav" ng-controller="navbarController">
-      <navbar></navbar>
-  </header>
-
-  <div class="container">
-    <div ng-view></div>
-  </div>
+  <script src="components/navbar/navbar.controller.js"></script>
 
 </body>
 </html>

@@ -1,9 +1,11 @@
-AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', 'databaseService', 'userService', function($scope, $location, pubMedService, databaseService, userService) {
+angular.module('AOIApp')
+  .controller('pubmedsearchCtrl', ['$scope', '$location', 'pubMedService', 'databaseService', 'userService', function($scope, $location, pubMedService, databaseService, userService) {
 
   // for easy debugging
   MY_SCOPE = $scope;
 
   // set some variables
+  $scope.user = userService.user;
   $scope.showAbstract = false;
   $scope.loading = true;
   var numload = 20;
@@ -11,7 +13,9 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
 
   // add in database services
   $scope.addArticle = (id) => {
-    ind = findPMID($scope.articles,id)
+    ind = findIndex($scope.articles,id)
+    console.log(ind)
+    console.log($scope.articles[ind])
     article = {
       Title: $scope.articles[ind].title,
       Authors: $scope.articles[ind].authorsFormatted,
@@ -21,8 +25,10 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
       URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.articles[ind].PMID,
       PMID: $scope.articles[ind].PMID,
     }
-    databaseService.create(article)
-    dbChecker_single(id)
+    databaseService.create(article).success(()=>{
+      dbChecker_single(ind)
+    })
+
     };
 
 
@@ -76,6 +82,7 @@ AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', '
 
     }, (err) => {
       console.log("Couldn't get articles!")
+
     });
   });
 

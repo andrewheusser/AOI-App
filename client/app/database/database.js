@@ -1,13 +1,9 @@
-AOIApp.controller('databaseController', ['$scope', '$location', '$http', 'databaseService', function($scope, $location, $http, databaseService) {
-
-  MY_SCOPE = $scope;
-  
-  $scope.$watch('dbSearch',()=>{
-    databaseService.dbSearch = $scope.dbSearch;
-  });
-
-  $scope.submit = () => {
-    $location.path("/dbsearch");
-  };
-
-}]);
+angular.module('AOIApp')
+    .config($stateProvider => {
+        $stateProvider
+            .state('database', {
+                url: '/database',
+                controller: 'databaseCtrl',
+                templateUrl: './app/database/database.html'
+        });
+});

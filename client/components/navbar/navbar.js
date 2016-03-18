@@ -1,7 +1,8 @@
 angular.module('AOIApp')
-    .directive('navbar', () => {
+  .directive('navbar', () => {
         return {
             restrict: 'E',
             templateUrl: './components/navbar/navbar.html',
+            controller: 'navbarController',
         }
     });

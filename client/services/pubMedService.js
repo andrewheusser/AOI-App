@@ -41,7 +41,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       .then((result)=>{
         return result
       }, (err)=>{
-        console.log("Couldn't get articles!")
+        console.log(err)
         return err
       });
 
@@ -53,7 +53,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
             articles = formatArticles(data)
             res(articles)
           }, (err) => {
-            console.log("Couldn't get articles!")
+            rej(err)
           })
         })
       };

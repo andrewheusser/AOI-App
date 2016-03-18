@@ -1,4 +1,5 @@
-AOIApp.factory('databaseService', ['$http',function($http) {
+angular.module('AOIApp')
+	.factory('databaseService', ['$http',function($http) {
 		return {
 			get : function(searchTerm) {
 				return $http.get('/api/database/' + searchTerm + '?callback=JSON_CALLBACK');

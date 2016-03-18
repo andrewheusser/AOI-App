@@ -1,4 +1,5 @@
-AOIApp.controller('searchController', ['$scope', '$location', 'pubMedService', 'databaseService', 'userService', function($scope, $location, pubMedService, databaseService, userService) {
+angular.module('AOIApp')
+  .controller('pubmedsearchCtrl', ['$scope', '$location', 'pubMedService', 'databaseService', 'userService', function($scope, $location, pubMedService, databaseService, userService) {
 
   // for easy debugging
   MY_SCOPE = $scope;

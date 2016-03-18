@@ -1,4 +1,5 @@
-AOIApp.controller('dbSearchController', ['$scope', '$location', '$http', 'databaseService', 'userService', function($scope, $location, $http, databaseService, userService) {
+angular.module('AOIApp')
+  .controller('databasesearchCtrl', ['$scope', '$location', '$http', 'databaseService', 'userService', function($scope, $location, $http, databaseService, userService) {
 
   MY_SCOPE = $scope;
 

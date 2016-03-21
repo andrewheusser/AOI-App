@@ -1,6 +1,6 @@
 AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http) {
 
-  var search = "Davachi L";
+  var search = "";
 
   searchArticles = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
   searchIds = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");

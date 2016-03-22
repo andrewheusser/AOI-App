@@ -5,7 +5,16 @@ angular.module('AOIApp')
   $scope.user = userService.user;
   $scope.articles = [];
 
+
   MY_SCOPE = $scope;
+
+  $scope.getMyJournals = (journals) => {
+    journalStr = '';
+    $scope.journals.forEach((journal) => {
+      journalStr = journalStr + journal.fullTitle + ", "
+    })
+    return journalStr.slice(0,-2)
+  };
 
   formatJournals = (journals) => {
     formattedJournals = '';

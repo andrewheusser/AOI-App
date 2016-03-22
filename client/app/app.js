@@ -14,5 +14,11 @@ AOIApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
           $state.go('login');
         }
       }
+      if (toState.name === 'login') {
+        if (userService.user.loggedIn) {
+        event.preventDefault();
+        $state.go('logout');
+      }
+    }
     })
   });

@@ -1,5 +1,5 @@
 angular.module('AOIApp')
-  .controller('newuserCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
+  .controller('registerCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
 
   $scope.user = userService.user;
   MY_SCOPE = $scope;

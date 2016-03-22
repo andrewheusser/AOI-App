@@ -23,7 +23,7 @@ angular.module('AOIApp')
       email: '',
       password: '',
       loggedIn: false,
-      myJournals: ''
+      myjournals: []
     }
   }
 }]);

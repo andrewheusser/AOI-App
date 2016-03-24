@@ -11,7 +11,7 @@ angular.module('AOIApp')
   databaseService.get($scope.dbSearch)
     .success((data)=>{
       console.log(data)
-      $scope.aois = data;
+      $scope.dbArticles = data;
       $scope.loading = false;
     }).catch((err)=>{
       console.log(err)
@@ -22,12 +22,12 @@ angular.module('AOIApp')
   // url = "/api/db/" + $scope.dbSearch + '?callback=JSON_CALLBACK'
   // $http.get(url)
   // .success(function(data) {
-  //   $scope.aois = data;
+  //   $scope.dbArticles = data;
   //   console.log("callback happened")
   // });
 
   $scope.openLink = function (id) {
-            link = $scope.aois[id].URL;
+            link = $scope.dbArticles[id].URL;
             window.open(link); // in new tab
   };
 }]);

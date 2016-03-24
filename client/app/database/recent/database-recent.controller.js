@@ -12,7 +12,7 @@ angular.module('AOIApp')
       databaseService.getRecent(num)
       .success((data)=>{
         console.log(data)
-        $scope.recentAois = data;
+        $scope.recentDbArticles = data;
         $scope.loading = false;
       }).catch((err)=>{
         console.log(err)

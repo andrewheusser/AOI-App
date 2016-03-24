@@ -11,6 +11,7 @@ angular.module('AOIApp')
     getRecent = (num) =>{
       databaseService.getRecent(num)
       .success((data)=>{
+        console.log(data)
         $scope.recentAois = data;
         $scope.loading = false;
       }).catch((err)=>{

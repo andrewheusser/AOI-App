@@ -10,6 +10,7 @@ angular.module('AOIApp')
 
   databaseService.get($scope.dbSearch)
     .success((data)=>{
+      console.log(data)
       $scope.aois = data;
       $scope.loading = false;
     }).catch((err)=>{

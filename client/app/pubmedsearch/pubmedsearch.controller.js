@@ -13,17 +13,17 @@ angular.module('AOIApp')
 
   // add in database services
   $scope.addArticle = (id) => {
-    ind = findIndex($scope.articles,id)
+    ind = findIndex($scope.pmArticles,id)
     console.log(ind)
-    console.log($scope.articles[ind])
+    console.log($scope.pmArticles[ind])
     article = {
-      Title: $scope.articles[ind].title,
-      Authors: $scope.articles[ind].authorsFormatted,
-      Abstract: $scope.articles[ind].abstract,
-      Journal: $scope.articles[ind].source,
-      Year: $scope.articles[ind].year,
-      URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.articles[ind].PMID,
-      PMID: $scope.articles[ind].PMID,
+      Title: $scope.pmArticles[ind].title,
+      Authors: $scope.pmArticles[ind].authorsFormatted,
+      Abstract: $scope.pmArticles[ind].abstract,
+      Journal: $scope.pmArticles[ind].source,
+      Year: $scope.pmArticles[ind].year,
+      URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.pmArticles[ind].PMID,
+      PMID: $scope.pmArticles[ind].PMID,
     }
     databaseService.create(article).success(()=>{
       dbChecker_single(ind)
@@ -42,24 +42,24 @@ angular.module('AOIApp')
   pubMedService.getIds($scope.search)
   .then((results) => {
     $scope.results = results;
-    searchResults(results.slice(0, numload-1)).then((articles)=>{
-      $scope.articles = articles;
-      $scope.articles.searchResults = $scope.results;
-      $scope.articles.numload = numload;
-      $scope.articles.loaded = loaded;
+    searchResults(results.slice(0, numload-1)).then((pmArticles)=>{
+      $scope.pmArticles = pmArticles;
+      $scope.pmArticles.searchResults = $scope.results;
+      $scope.pmArticles.numload = numload;
+      $scope.pmArticles.loaded = loaded;
       $scope.loading = false;
       $scope.$apply();
 
       // Check to see if article is in database
       dbChecker = (i) => {
-        if(i < $scope.articles.length){
-          a = $scope.articles[i].id || $scope.articles[i].PMID
-          databaseService.getMatch($scope.articles[i].PMID)
+        if(i < $scope.pmArticles.length){
+          a = $scope.pmArticles[i].id || $scope.pmArticles[i].PMID
+          databaseService.getMatch($scope.pmArticles[i].PMID)
             .success((data)=>{
               if (data.length){
-                $scope.articles[i].inDB = true;
+                $scope.pmArticles[i].inDB = true;
               } else {
-                $scope.articles[i].inDB = false;
+                $scope.pmArticles[i].inDB = false;
               }
               dbChecker(i+1)
             })
@@ -69,19 +69,19 @@ angular.module('AOIApp')
 
       // Check to see if article is in database
       dbChecker_single = (i) => {
-          databaseService.getMatch($scope.articles[i].PMID)
+          databaseService.getMatch($scope.pmArticles[i].PMID)
             .success((data)=>{
               console.log(data)
               if (data.length){
-                $scope.articles[i].inDB = true;
+                $scope.pmArticles[i].inDB = true;
               } else {
-                $scope.articles[i].inDB = false;
+                $scope.pmArticles[i].inDB = false;
               }
             })
       };
 
     }, (err) => {
-      console.log("Couldn't get articles!")
+      console.log("Couldn't get pmArticles!")
 
     });
   });

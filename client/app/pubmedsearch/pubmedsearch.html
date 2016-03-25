@@ -43,7 +43,7 @@ Results for search: <b>{{search}}</b>
   </div>
 </div>
 <center>
-  <button type="button" class="btn btn-xl btn-info" ng-class="articles.loaded>=articles.searchResults.length ? 'disabled': ''" ng-hide="loading" ng-click="loadMore(articles)">
+  <button type="button" class="btn btn-xl btn-info" ng-class="articles.loaded>=articles.searchResults.length ? 'disabled': ''" ng-hide="loading" ng-click="loadMore(pmArticles)">
     <a style="color:white; text-decoration:none"><span class="glyphicon glyphicon-chevron-down"></span> {{articles.loaded>=articles.searchResults.length ? "That's all folks" : "Load More"}}</a>
   </button>
 </center>

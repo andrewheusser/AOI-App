@@ -14,4 +14,15 @@ angular.module('AOIApp')
     $location.path("/home");
   })};
 
+  $scope.registerUser = () => {
+    userService.register({
+      email: $scope.email,
+      password: $scope.password,
+      firstname: $scope.firstname
+  }).success((data)=>{
+    userService.user = data.local;
+    userService.user.loggedIn = true;
+    $location.path("/home");
+  })};
+
 }]);

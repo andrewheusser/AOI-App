@@ -129,6 +129,17 @@ module.exports = function(app, passport, mongoose) {
     res.send(req.user);
   });
 
+  // process the signup form
+  app.post('/api/auth/register',
+  passport.authenticate('local-signup', { failureRedirect: '/login' }),
+    // successRedirect : '/home', // redirect to the secure profile section
+    // failureRedirect : '/register', // redirect back to the signup page if there is an error
+    // failureFlash : true // allow flash messages
+    function(req, res) {
+      // res.redirect('/home', { user : req });
+      res.send(req.user);
+  });
+
 
   app.get('*', function(req, res) {
     res.sendfile('./client/index.html'); // load the single view file (angular will handle the page changes on the front-end)

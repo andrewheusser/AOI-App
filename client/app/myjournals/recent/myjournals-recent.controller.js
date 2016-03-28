@@ -1,10 +1,10 @@
 angular.module('AOIApp')
-  .controller('myjournalsRecentCtrl', ['$scope', 'pubMedService', 'userService', 'databaseService', function($scope, pubMedService, userService, databaseService) {
+.controller('myjournalsRecentCtrl', ['$scope', 'pubMedService', 'userService', 'databaseService', 'localStorageService', function($scope, pubMedService, userService, databaseService, localStorageService) {
 
   $scope.journals = userService.user.myjournals;
   $scope.user = userService.user;
   $scope.mjArticles = [];
-
+  $scope.keywords = ["Memory", "Sleep"];
 
   MY_SCOPE = $scope;
 
@@ -16,98 +16,69 @@ angular.module('AOIApp')
     return journalStr.slice(0,-2)
   };
 
-  formatJournals = (journals) => {
+  var formatJournals = (journals) => {
     formattedJournals = '';
     $scope.journals.forEach((journal) => {
       formattedJournals = formattedJournals + journal.shortTitle + "[JOURNAL] OR "
     })
     return formattedJournals.slice(0,-4)
-  }
+  };
+
+  $scope.getMyKeywords = (keywords) => {
+    keywordStr = '';
+    $scope.keywords.forEach((keyword) => {
+      keywordStr = keywordStr + keyword + ", "
+    })
+    return keywordStr.slice(0,-2)
+  };
+
+  var formatKeywords = (keywords) => {
+    formattedKeywords = '(';
+    $scope.keywords.forEach((keyword) => {
+      formattedKeywords = formattedKeywords + keyword + "[All Fields] OR "
+    })
+    return formattedKeywords.slice(0,-4) + ')'
+  };
+
+  $scope.mjArticles = localStorageService.getMjArticles();
+
+  $scope.getArticles = () => {
+
+      var numload = 20;
+      var loaded = 20;
+      $scope.formattedJournals = formatJournals(userService.user.myjournals)
+      $scope.showAbstract = false;
+      $scope.loading = true;
+      $scope.search = $scope.formattedJournals + ' ' + $scope.formattedKeywords;
+
+      pubMedService.getIds($scope.search)
+      .then((results) => {
+        $scope.results = results;
+        searchResults(results.slice(0, numload-1)).then((mjArticles)=>{
+          $scope.mjArticles = mjArticles;
+          $scope.mjArticles.searchResults = $scope.results;
+          $scope.mjArticles.numload = numload;
+          $scope.mjArticles.loaded = loaded;
+          $scope.loading = false;
+          localStorageService.persistMjArticles($scope.mjArticles);
+          $scope.$apply();
+          dbChecker(0);
+        }, (err) => {
+          console.log("Couldn't get mjArticles!")
+        });
+      });
+  };
 
   if(userService.user.loggedIn && $scope.mjArticles.length<1){
-    $scope.formattedJournals = formatJournals(userService.user.myjournals)
-
-
-    $scope.showAbstract = false;
-    $scope.loading = true;
-    var numload = 20;
-    var loaded = 20;
-
-    // add in database services
-    $scope.addArticle = (id) => {
-      ind = findIndex($scope.mjArticles,id)
-      console.log(ind)
-      console.log($scope.mjArticles[ind])
-      article = {
-        Title: $scope.mjArticles[ind].title,
-        Authors: $scope.mjArticles[ind].authorsFormatted,
-        Abstract: $scope.mjArticles[ind].abstract,
-        Journal: $scope.mjArticles[ind].source,
-        Year: $scope.mjArticles[ind].year,
-        URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.mjArticles[ind].PMID,
-        PMID: $scope.mjArticles[ind].PMID,
-      }
-      databaseService.create(article).success(()=>{
-        dbChecker_single(ind)
-      })
-
-    };
-
-    // add in pubmed services
-    $scope.search = $scope.formattedJournals;
-    $scope.loadMore = (ids)=>{
-      pubMedService.loadMore(ids)
-      dbChecker(0)
-    };
-
-    pubMedService.getIds($scope.search)
-    .then((results) => {
-      $scope.results = results;
-      searchResults(results.slice(0, numload-1)).then((mjArticles)=>{
-        $scope.mjArticles = mjArticles;
-        $scope.mjArticles.searchResults = $scope.results;
-        $scope.mjArticles.numload = numload;
-        $scope.mjArticles.loaded = loaded;
-        $scope.loading = false;
-        $scope.$apply();
-
-        // Check to see if article is in database
-        dbChecker = (i) => {
-          if(i < $scope.mjArticles.length){
-            a = $scope.mjArticles[i].id || $scope.mjArticles[i].PMID
-            databaseService.getMatch($scope.mjArticles[i].PMID)
-            .success((data)=>{
-              if (data.length){
-                $scope.mjArticles[i].inDB = true;
-              } else {
-                $scope.mjArticles[i].inDB = false;
-              }
-              dbChecker(i+1)
-            })
-          }
-        };
-        dbChecker(0)
-
-        // Check to see if article is in database
-        dbChecker_single = (i) => {
-          databaseService.getMatch($scope.mjArticles[i].PMID)
-          .success((data)=>{
-            console.log(data)
-            if (data.length){
-              $scope.mjArticles[i].inDB = true;
-            } else {
-              $scope.mjArticles[i].inDB = false;
-            }
-          })
-        };
-
-      }, (err) => {
-        console.log("Couldn't get mjArticles!")
-
-      });
-    });
+    $scope.getArticles();
 
   };
+
+  $scope.refreshArticles = () => {
+    $scope.mjArticles = [];
+    localStorageService.clearMjArticles();
+    $scope.getArticles();
+  }
 
   // query filter logic
   $scope.filterFunction = function(element) {
@@ -116,7 +87,60 @@ angular.module('AOIApp')
 
   // open link when it is clicked
   $scope.navigationUrl = function (event, id) {
-            window.open('http://www.ncbi.nlm.nih.gov/pubmed/' + id, '_blank'); // in new tab
+    window.open('http://www.ncbi.nlm.nih.gov/pubmed/' + id, '_blank'); // in new tab
+  };
+
+  // add in database services
+  $scope.addArticle = (id) => {
+    ind = findIndex($scope.mjArticles,id)
+    console.log(ind)
+    console.log($scope.mjArticles[ind])
+    article = {
+      Title: $scope.mjArticles[ind].title,
+      Authors: $scope.mjArticles[ind].authorsFormatted,
+      Abstract: $scope.mjArticles[ind].abstract,
+      Journal: $scope.mjArticles[ind].source,
+      Year: $scope.mjArticles[ind].year,
+      URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.mjArticles[ind].PMID,
+      PMID: $scope.mjArticles[ind].PMID,
+    }
+    databaseService.create(article).success(()=>{
+      dbChecker_single(ind)
+    })
+  };
+
+  $scope.loadMore = (ids)=>{
+    pubMedService.loadMore(ids)
+    dbChecker(0)
+  };
+
+  // Check to see if article is in database
+  dbChecker_single = (i) => {
+    databaseService.getMatch($scope.mjArticles[i].PMID)
+    .success((data)=>{
+      console.log(data)
+      if (data.length){
+        $scope.mjArticles[i].inDB = true;
+      } else {
+        $scope.mjArticles[i].inDB = false;
+      }
+    })
+  };
+
+  // Check to see if article is in database
+  dbChecker = (i) => {
+    if(i < $scope.mjArticles.length){
+      a = $scope.mjArticles[i].id || $scope.mjArticles[i].PMID
+      databaseService.getMatch($scope.mjArticles[i].PMID)
+      .success((data)=>{
+        if (data.length){
+          $scope.mjArticles[i].inDB = true;
+        } else {
+          $scope.mjArticles[i].inDB = false;
+        }
+        dbChecker(i+1)
+      })
+    }
   };
 
   findIndex = (arr,id) =>{

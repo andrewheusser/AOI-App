@@ -1,12 +1,12 @@
 angular.module('AOIApp')
-  .controller('databaseRecentCtrl', ['$scope', '$location', '$http', 'databaseService', function($scope, $location, $http, databaseService) {
+  .controller('databaseRecentCtrl', ['$scope', '$location', '$http', 'userService', 'databaseService', 'localStorageService', function($scope, $location, $http, userService, databaseService, localStorageService) {
 
     MY_SCOPE = $scope;
 
     $scope.dbSearch = databaseService.dbSearch;
     $scope.loading = true;
     $scope.showAbstract = false;
-    // $scope.user = userService.user;
+    $scope.recentDbArticles = localStorageService.getRecentDbArticles();
 
     getRecent = (num) =>{
       databaseService.getRecent(num)
@@ -14,11 +14,14 @@ angular.module('AOIApp')
         console.log(data)
         $scope.recentDbArticles = data;
         $scope.loading = false;
+        localStorageService.persistRecentDbArticles($scope.recentDbArticles);
       }).catch((err)=>{
         console.log(err)
       })
     };
-    getRecent(20);
+    if(userService.user.loggedIn && $scope.recentDbArticles.length<1){
+      getRecent(20);
+    };
 
     $scope.display20 = () =>{
       $scope.loading = true;

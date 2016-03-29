@@ -1,4 +1,4 @@
-var AOIApp = angular.module('AOIApp', ['ui.router', 'ngResource', 'autocomplete']);
+var AOIApp = angular.module('AOIApp', ['ui.router', 'ngResource']);
 
 AOIApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 

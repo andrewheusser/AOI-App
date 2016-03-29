@@ -2,6 +2,7 @@
 module.exports = function(app, passport, mongoose) {
 
   var Aoi = mongoose.model('Aoi');
+  var User = mongoose.model('User');
 
   app.get('/api/database/:search', (req, res) => {
     Aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{
@@ -42,7 +43,42 @@ module.exports = function(app, passport, mongoose) {
       if (err) { return next(err) }
       res.json(201, post)
     })
-  })
+  });
+
+  app.post('/api/database/myjournal/myjournals', function (req, res, next) {
+    var query = { 'local.email': req.body.email };
+    var update = {'local.myjournals': req.body.myjournals};
+    var options = {new: true};
+
+    User.findOneAndUpdate(query, update, options).exec((err, result) =>{
+      res.send(result)
+    });
+  });
+
+  app.post('/api/database/myjournal/keywords', function (req, res, next) {
+    var query = { 'local.email': req.body.email };
+    var update = {'local.keywords': req.body.keywords};
+    var options = {new: true};
+
+    User.findOneAndUpdate(query, update, options).exec((err, result) =>{
+      res.send(result)
+    });
+  });
+
+
+    // var aoi = new Aoi({
+    //   Title: req.body.Title,
+    //   Abstract: req.body.Abstract,
+    //   Authors: req.body.Authors,
+    //   URL: req.body.URL,
+    //   Year: req.body.Year,
+    //   User: req.body.User,
+    //   PMID: req.body.PMID,
+    // })
+    // aoi.save(function (err, post) {
+    //   if (err) { return next(err) }
+    //   res.json(201, post)
+    // })
 
   // app.get('/api/journals', (req, res) => {
   //   Aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{

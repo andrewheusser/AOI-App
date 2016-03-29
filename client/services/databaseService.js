@@ -1,6 +1,8 @@
 angular.module('AOIApp')
-	.factory('databaseService', ['$http',function($http) {
+	.factory('databaseService', ['$http', function($http) {
 		return {
+
+			// routes for dealing with articles
 			get : function(searchTerm) {
 				return $http.get('/api/database/' + searchTerm + '?callback=JSON_CALLBACK');
 			},
@@ -15,6 +17,14 @@ angular.module('AOIApp')
 			},
 			delete : function(id) {
 				return $http.delete('/api/database/' + id);
-			}
+			},
+
+			// routes for dealing with myjournals and keywords
+			updateMyJournals : function(journalData) {
+				return $http.post('/api/database/myjournal/myjournals', journalData);
+			},
+			updateMyKeywords : function(keywordData) {
+				return $http.post('/api/database/myjournal/keywords', keywordData);
+			},
 		}
 	}]);

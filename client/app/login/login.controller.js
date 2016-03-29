@@ -11,7 +11,7 @@ angular.module('AOIApp')
   }).success((data)=>{
     userService.user = data.local;
     userService.user.loggedIn = true;
-    $location.path("/home");
+    $location.path("/myjournals/recent");
   })};
 
 }]);

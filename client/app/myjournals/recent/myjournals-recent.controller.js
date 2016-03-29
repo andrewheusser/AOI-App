@@ -2,9 +2,9 @@ angular.module('AOIApp')
 .controller('myjournalsRecentCtrl', ['$scope', 'pubMedService', 'userService', 'databaseService', 'localStorageService', function($scope, pubMedService, userService, databaseService, localStorageService) {
 
   $scope.journals = userService.user.myjournals;
+  $scope.keywords = userService.user.keywords;
   $scope.user = userService.user;
   $scope.mjArticles = [];
-  $scope.keywords = ["Memory", "Sleep"];
 
   MY_SCOPE = $scope;
 
@@ -33,11 +33,15 @@ angular.module('AOIApp')
   };
 
   var formatKeywords = (keywords) => {
-    formattedKeywords = '(';
-    $scope.keywords.forEach((keyword) => {
-      formattedKeywords = formattedKeywords + keyword + "[All Fields] OR "
-    })
-    return formattedKeywords.slice(0,-4) + ')'
+    if (keywords.length>0){
+      formattedKeywords = '(';
+      $scope.keywords.forEach((keyword) => {
+        formattedKeywords = formattedKeywords + keyword + "[All Fields] OR "
+      })
+      return formattedKeywords.slice(0,-4) + ')'
+    } else {
+      return keywords
+    }
   };
 
   $scope.mjArticles = localStorageService.getMjArticles();
@@ -47,9 +51,11 @@ angular.module('AOIApp')
       var numload = 20;
       var loaded = 20;
       $scope.formattedJournals = formatJournals(userService.user.myjournals)
+      $scope.formattedKeywords = formatKeywords(userService.user.keywords)
       $scope.showAbstract = false;
       $scope.loading = true;
-      $scope.search = $scope.formattedJournals + ' ' + $scope.formattedKeywords;
+      $scope.search = formatJournals(userService.user.myjournals) + 'AND ' + formatKeywords(userService.user.keywords);
+      console.log($scope.search)
 
       pubMedService.getIds($scope.search)
       .then((results) => {

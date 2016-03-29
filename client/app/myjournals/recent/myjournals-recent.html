@@ -1,13 +1,11 @@
 <div style="height:10px"></div>
-<div>
-  <a ng-click="refreshArticles()" class="pull-left btn btn-danger" style="margin-right:20px">Refresh</a>
-<div class="pull-left" style="margin-left:100px; margin-top:60px"> <b>Tracking journals: </b> {{getMyJournals()}}</div>
-<!-- <div class="pull-left" style="margin-left:10px; margin-top:80px"> <b>Tracking keywords: </b> {{getMyKeywords()}}</div> -->
-
+<a ng-click="refreshArticles()" class="pull-left btn btn-danger" style="margin-right:20px">Refresh</a>
 <div class="form-group pull-right">
     <input type="text" ng-model="query" class="form-control" placeholder="Filter by"/>
 </div>
-  <div style="height:100px"></div>
+<div style="height:10px"></div>
+<div>Tracking <b>journals:</b> <i>{{getMyJournals()}}</i> and <b>keywords:</b> <i>{{getMyKeywords()}}</i></div>
+<div style="height:50px"></div>
 <div>
 <div ng-repeat="article in mjArticles | filter:query">
   <div class="panel panel-default">

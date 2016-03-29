@@ -23,6 +23,13 @@ angular.module('AOIApp')
       getRecent(20);
     };
 
+    $scope.refreshArticles = () => {
+      $scope.loading = false;
+      $scope.recentDbArticles = [];
+      localStorageService.clearRecentDbArticles();
+      getRecent(20);
+    }
+
     $scope.display20 = () =>{
       $scope.loading = true;
       getRecent(20);

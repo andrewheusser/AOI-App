@@ -45,6 +45,16 @@ angular.module('AOIApp')
       getRecent(100);
     }
 
+    $scope.displayAll = () =>{
+      $scope.loading = true;
+      databaseService.getAll()
+      .success((data)=>{
+        $scope.recentDbArticles = data;
+        $scope.loading = false;
+        localStorageService.persistRecentDbArticles($scope.recentDbArticles);
+      });
+    };
+
     // $scope.dbSearch = "Davachi L";
 
     // url = "/api/db/" + $scope.dbSearch + '?callback=JSON_CALLBACK'

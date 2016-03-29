@@ -22,6 +22,17 @@ module.exports = function(app, passport, mongoose) {
     })
   });
 
+  app.get('/api/database/all/:search', (req, res) => {
+    console.log("matching path")
+    Aoi.find().sort({_id:-1}).exec((err, aois) =>{
+      if (err) {
+        console.log(err)
+      } else {
+      res.send(aois)
+      }
+    })
+  });
+
   app.post('/api/database/:search', (req, res) => {
     aoi.find({ $text : { $search : req.params.search } }, (err, aois) =>{
       res.send(aois)

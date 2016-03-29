@@ -20,5 +20,12 @@ AOIApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         $state.go('logout');
       }
     }
+    if (toState.name === 'myjournals.recent') {
+      if (userService.user.myjournals.length==0 && userService.user.keywords.length==0) {
+      event.preventDefault();
+      $state.go('myjournals.settings');
+    }
+  }
+
     })
   });

@@ -1,6 +1,6 @@
 {
   "name": "aoi-app",
-  "main": "server.js",
+  "main": "server/server.js",
   "dependencies": {
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",

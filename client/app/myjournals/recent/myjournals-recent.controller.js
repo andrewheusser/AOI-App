@@ -54,7 +54,7 @@ angular.module('AOIApp')
       $scope.formattedKeywords = formatKeywords(userService.user.keywords)
       $scope.showAbstract = false;
       $scope.loading = true;
-      $scope.search = formatJournals(userService.user.myjournals) + 'AND ' + formatKeywords(userService.user.keywords);
+      $scope.search = formatJournals(userService.user.myjournals) + ' AND ' + formatKeywords(userService.user.keywords);
       console.log($scope.search)
 
       pubMedService.getIds($scope.search)
@@ -99,7 +99,6 @@ angular.module('AOIApp')
   // add in database services
   $scope.addArticle = (id) => {
     ind = findIndex($scope.mjArticles,id)
-    console.log($scope.mjArticles[ind].source)
     article = {
       Title: $scope.mjArticles[ind].title,
       Authors: $scope.mjArticles[ind].authorsFormatted,

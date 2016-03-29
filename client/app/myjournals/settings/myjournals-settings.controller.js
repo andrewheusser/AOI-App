@@ -57,26 +57,4 @@ angular.module('AOIApp')
       console.log($scope.keywords)
     });
   };
-
-  // $scope.removeJournal = (index) => {
-  //   $scope.journals.splice(index,1);
-  //   var data = {
-  //     email: $scope.user.email,
-  //     myjournals: $scope.journals,
-  //   }
-  //   databaseService.updateMyJournal(data).success((result)=>{
-  //     $scope.journals = result.local.myjournals;
-  //   });
-  // };
-  //
-  //   $scope.addKeyword = () => {
-  //     $scope.keywords.push($scope.addedkeyword)
-  //     $scope.addedkeyword = '';
-  //   };
-  //
-  //   $scope.removeKeyword = (index) =>{
-  //     $scope.keywords.splice(index,1)
-  //   };
-
-
 }]);

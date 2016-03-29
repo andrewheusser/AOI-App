@@ -19,8 +19,11 @@
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2"
   },
+  "engines": {
+    "node": "^4.2.3"
+  },
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "node server/server.js"
   },
   "version": "1.0.0",
   "description": "A web app that allows the user to search pubmed, monitor specific journals and easily add papers to a shared database",

@@ -24,7 +24,9 @@ angular.module('AOIApp')
       Year: $scope.pmArticles[ind].year,
       URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.pmArticles[ind].PMID,
       PMID: $scope.pmArticles[ind].PMID,
-    }
+      AddedBy: userService.user.firstname,
+    };
+    console.log(article)
     databaseService.create(article).success(()=>{
       dbChecker_single(ind)
     })

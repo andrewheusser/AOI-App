@@ -32,12 +32,13 @@ module.exports = function(app, passport, mongoose) {
   app.post('/api/database/', function (req, res, next) {
     var aoi = new Aoi({
       Title: req.body.Title,
+      Journal: req.body.Journal,
       Abstract: req.body.Abstract,
       Authors: req.body.Authors,
       URL: req.body.URL,
       Year: req.body.Year,
-      User: req.body.User,
       PMID: req.body.PMID,
+      AddedBy: req.body.AddedBy,
     })
     aoi.save(function (err, post) {
       if (err) { return next(err) }

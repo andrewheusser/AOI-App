@@ -3,12 +3,13 @@ var Schema = mongoose.Schema;
 
 var aoiSchema = new Schema({
   Title:  String,
+  Journal:  String,
   Authors: String,
   Abstract:   String,
   URL:  String,
   Year: String,
-  User: String,
   PMID: String,
+  AddedBy: String,
 });
 
 // create the model for users and expose it to our app

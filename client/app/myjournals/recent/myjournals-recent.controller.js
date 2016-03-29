@@ -99,8 +99,7 @@ angular.module('AOIApp')
   // add in database services
   $scope.addArticle = (id) => {
     ind = findIndex($scope.mjArticles,id)
-    console.log(ind)
-    console.log($scope.mjArticles[ind])
+    console.log($scope.mjArticles[ind].source)
     article = {
       Title: $scope.mjArticles[ind].title,
       Authors: $scope.mjArticles[ind].authorsFormatted,
@@ -109,6 +108,7 @@ angular.module('AOIApp')
       Year: $scope.mjArticles[ind].year,
       URL: 'http://www.ncbi.nlm.nih.gov/pubmed/' + $scope.mjArticles[ind].PMID,
       PMID: $scope.mjArticles[ind].PMID,
+      AddedBy: userService.user.firstname,
     }
     databaseService.create(article).success(()=>{
       dbChecker_single(ind)
@@ -124,7 +124,6 @@ angular.module('AOIApp')
   dbChecker_single = (i) => {
     databaseService.getMatch($scope.mjArticles[i].PMID)
     .success((data)=>{
-      console.log(data)
       if (data.length){
         $scope.mjArticles[i].inDB = true;
       } else {

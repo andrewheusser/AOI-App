@@ -41,6 +41,7 @@
         <button type="button" class="btn btn-sm btn-info" ng-click="showAbstract = !showAbstract">
           <a style="color:white; text-decoration:none"><span class="glyphicon" ng-class="showAbstract ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span> Abstract</a>
         </button>
+        <p ng-show="article.AddedBy" class="pull-right" style="opacity:.3"><i>Added by: <b>{{article.AddedBy}}<b></i></p>
       </div>
   </div>
 </div>

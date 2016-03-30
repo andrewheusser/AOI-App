@@ -50,8 +50,12 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           getAbstracts(ids)
           // getArticles(ids)
           .then((data)=>{
+            if(data.status === 400){
+              res("Not Found")
+            } else {
             articles = formatArticles(data)
             res(articles)
+          };
           }, (err) => {
             rej(err)
           })

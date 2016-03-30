@@ -50,7 +50,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
           getAbstracts(ids)
           // getArticles(ids)
           .then((data)=>{
-            console.log(data.data.PubmedArticleSet)
             articles = formatArticles(data)
             res(articles)
           }, (err) => {
@@ -73,7 +72,6 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         // article = {};
         data = data.data.PubmedArticleSet.PubmedArticle;
         data.forEach((article)=>{
-          console.log(article.PubmedData.History.PubMedPubDate)
           articleObj = new Article();
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
           articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
@@ -88,10 +86,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
       formatDate = (date) => {
         if(date.constructor === Array){
-          console.log("yes, array")
           return date[0].Year
         } else {
-          console.log("no array")
           return date.Year
         }
       };

@@ -6,7 +6,7 @@ Articles of interest App: This web application wraps pubmed and adds functionali
 
 To run:
 
-1. `git clone https://github.com/andyh616/AOI-App/tree/express-refactor`
+1. `git clone https://github.com/andrewheusser/AOI-App.git`
 2. `npm install`
 3. `npm start`
 

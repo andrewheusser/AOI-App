@@ -74,8 +74,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         data.forEach((article)=>{
           articleObj = new Article();
           articleObj.title = article.MedlineCitation.Article.ArticleTitle;
-          articleObj.authorsFormatted = formatAuthors(article.MedlineCitation.Article.AuthorList.Author);
-          articleObj.year = formatDate(article.PubmedData.History.PubMedPubDate);
+          articleObj.authorsFormatted = formatAuthors(article);
+          articleObj.year = formatDate(article);
           articleObj.PMID=article.MedlineCitation.PMID.__text;
           articleObj.source = article.MedlineCitation.Article.Journal.ISOAbbreviation;
           articleObj.abstract = formatAbstract(article);
@@ -84,7 +84,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
         return articlesArray
       };
 
-      formatDate = (date) => {
+      formatDate = (article) => {
+        var date = article.PubmedData.History.PubMedPubDate;
         if(date.constructor === Array){
           return date[0].Year
         } else {
@@ -93,26 +94,31 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       };
 
       formatAbstract = (article) => {
-         if (typeof article.MedlineCitation.Article.Abstract === 'undefined'){
+        if (!article.MedlineCitation.Article.hasOwnProperty('Abstract')){
           return 'No Abstract Found'
         } else if (article.MedlineCitation.Article.Abstract.AbstractText.constructor === Array){
-           return article.MedlineCitation.Article.Abstract.AbstractText[0].__text;
+          return article.MedlineCitation.Article.Abstract.AbstractText[0].__text;
         } else if (typeof article.MedlineCitation.Article.Abstract.AbstractText === 'object'){
-           return article.MedlineCitation.Article.Abstract.AbstractText.__text;
+          return article.MedlineCitation.Article.Abstract.AbstractText.__text;
         } else {
           return article.MedlineCitation.Article.Abstract.AbstractText
         }
       };
 
-      formatAuthors = (authors) => {
-        if(authors.constructor === Array) {
-          authorList=[];
-          authors.forEach((author)=>{
-            authorList.push(author.LastName + ' ' + author.Initials)
-          });
-          return authorList.join(', ')
-        } else if(authors.constructor === Object){
-          return authors.LastName + ' ' + authors.Initials
+      formatAuthors = (article) => {
+        if(!article.MedlineCitation.Article.hasOwnProperty('AuthorList')){
+          return "No Authors Found"
+        } else {
+          authors = article.MedlineCitation.Article.AuthorList.Author;
+          if(authors.constructor === Array) {
+            authorList=[];
+            authors.forEach((author)=>{
+              authorList.push(author.LastName + ' ' + author.Initials)
+            });
+            return authorList.join(', ')
+          } else if(authors.constructor === Object){
+            return authors.LastName + ' ' + authors.Initials
+          }
         }
       };
 

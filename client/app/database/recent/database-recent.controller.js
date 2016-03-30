@@ -65,7 +65,7 @@ angular.module('AOIApp')
     // });
 
     $scope.openLink = function (id) {
-              link = $scope.aois[id].URL;
+              link = $scope.recentDbArticles[id].URL;
               window.open(link); // in new tab
     };
 

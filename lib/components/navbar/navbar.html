@@ -1,0 +1,14 @@
+<nav class="navbar navbar-default">
+  <div>
+    <ul class="nav navbar-nav pull-left">
+      <li><a href="/" class="navbar-logo" style="padding-top:13px; padding-bottom:10px"><img style="width:50%; margin-left:30px" src="./assets/davachi.png"></a></li>
+      <li><p style="color:white; margin-top:20px" ng-show="user.loggedIn">Welcome <b>{{user.firstname}}</b>!</p></li>
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li ng-class="{active:isActive('/home')}"><a ui-sref="home">PubMed</a></li>
+      <li ng-class="{active:isActive('/myjournals')}"><a ui-sref="myjournals.recent">My Journals</a></li>
+      <li ng-class="{active:isActive('/database')}"><a ui-sref="database.recent" >Database</a></li>
+      <li ng-class="{active:isActive('/login')}" style="margin-right:20px"><a ui-sref="login" ><span class="glyphicon glyphicon-cog"></span></a></li>
+    </ul>
+  </div>
+</nav>

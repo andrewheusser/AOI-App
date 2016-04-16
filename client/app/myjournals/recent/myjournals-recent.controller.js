@@ -99,6 +99,7 @@ angular.module('AOIApp')
   // add in database services
   $scope.addArticle = (id) => {
     ind = findIndex($scope.mjArticles,id)
+    $scope.mjArticles[ind].inDB=true;
     article = {
       Title: $scope.mjArticles[ind].title,
       Authors: $scope.mjArticles[ind].authorsFormatted,

@@ -1,0 +1,16 @@
+<p class="pull-right" ng-show="user.loggedIn">Welcome <b>{{user.firstname}}</b>!</p>
+<div style="height:20px"></div>
+<div style="height:100px"></div>
+<center>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h4>Search for articles on <b>PubMed:</b></h4>
+        <form ng-submit="submit()">
+          <div class="form-group">
+            <input type="text" ng-model="search" class="form-control" placeholder="e.g. Davachi L"/>
+          </div>
+          <input type="submit" class="btn btn-primary btn-lg" value="Search"/>
+        </form>
+    </div>
+</div>
+</center>

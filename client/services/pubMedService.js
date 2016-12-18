@@ -2,12 +2,18 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
   var search = "";
 
-  searchArticles = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
-  searchIds = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");
+  searchArticles = $resource("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
+  searchIds = $resource("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");
+  headers = {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+            }
 
   getIds = (search) => {
     return searchIds.get(
       {
+        headers: headers,
         db: "pubmed",
         retmode: "json",
         term: search,
@@ -17,14 +23,16 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
     getArticles = (ids) => {
       return searchArticles.get({
+        headers: headers,
         db: "pubmed",
         retmode: "json",
         id: ids.join()}).$promise.then((data)=>{return data.result})
       };
 
       getAbstracts = (ids) => $http({
+        headers : headers,
         method  : 'GET',
-        url     : 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi',
+        url     : 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi',
         timeout : 10000,
         params  : {
           db: "pubmed",

@@ -2,8 +2,8 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
 
   var search = "";
 
-  searchArticles = $resource("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
-  searchIds = $resource("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");
+  searchArticles = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
+  searchIds = $resource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");
   headers = {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
@@ -32,7 +32,7 @@ AOIApp.factory('pubMedService', ['$resource', '$http', function($resource, $http
       getAbstracts = (ids) => $http({
         headers : headers,
         method  : 'GET',
-        url     : 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi',
+        url     : 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi',
         timeout : 10000,
         params  : {
           db: "pubmed",

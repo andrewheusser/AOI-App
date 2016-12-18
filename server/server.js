@@ -33,7 +33,7 @@ require('./app/models/user.js')
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
-app.use(express.static(__dirname + '/../lib'));
+app.use(express.static(__dirname + '/../client')); // + '/../lib'
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms

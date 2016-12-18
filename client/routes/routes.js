@@ -1,42 +1,27 @@
 AOIApp.config(function ($routeProvider, $locationProvider) {
 
-  $routeProvider
-
-  .when('/', {
+  $routeProvider.when('/', {
     templateUrl: 'app/home/home.htm',
     controller: 'homeController'
-  })
-
-  .when('/home', {
+  }).when('/home', {
     templateUrl: 'app/home/home.htm',
     controller: 'homeController'
-  })
-
-  .when('/myjournals', {
+  }).when('/myjournals', {
     templateUrl: 'app/myjournals/myjournals.htm',
     controller: 'myJournalsController'
-  })
-
-  .when('/login', {
+  }).when('/login', {
     templateUrl: 'app/login/login.htm',
     controller: 'loginController'
-  })
-
-  .when('/search', {
+  }).when('/search', {
     templateUrl: 'app/search/search.htm',
     controller: 'searchController'
-  })
-
-  .when('/database', {
+  }).when('/database', {
     templateUrl: 'app/database/database.htm',
     controller: 'databaseController'
-  })
-
-  .when('/dbsearch', {
+  }).when('/dbsearch', {
     templateUrl: 'app/dbsearch/dbsearch.htm',
     controller: 'dbSearchController'
   });
 
   $locationProvider.html5Mode(true);
-
 });

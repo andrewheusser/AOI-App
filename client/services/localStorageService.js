@@ -1,34 +1,31 @@
-AOIApp.factory('localStorageService', function() {
+AOIApp.factory('localStorageService', function () {
 
   var persistedRecentDbArticles = [];
   var persistedMjArticles = [];
 
-
-  persistRecentDbArticles = (articles) => {
+  persistRecentDbArticles = function persistRecentDbArticles(articles) {
     persistedRecentDbArticles = articles;
   };
 
-  clearRecentDbArticles = () => {
+  clearRecentDbArticles = function clearRecentDbArticles() {
     persistedRecentDbArticles = [];
   };
 
-  getRecentDbArticles = () => {
-    return persistedRecentDbArticles
+  getRecentDbArticles = function getRecentDbArticles() {
+    return persistedRecentDbArticles;
   };
 
-  persistMjArticles = (articles) => {
+  persistMjArticles = function persistMjArticles(articles) {
     persistedMjArticles = articles;
-  }
+  };
 
-  clearMjArticles = () => {
+  clearMjArticles = function clearMjArticles() {
     persistedMjArticles = [];
   };
 
-  getMjArticles = () => {
-    return persistedMjArticles
+  getMjArticles = function getMjArticles() {
+    return persistedMjArticles;
   };
-
-
 
   return {
     persistRecentDbArticles: persistRecentDbArticles,
@@ -36,6 +33,6 @@ AOIApp.factory('localStorageService', function() {
     getRecentDbArticles: getRecentDbArticles,
     persistMjArticles: persistMjArticles,
     clearMjArticles: clearMjArticles,
-    getMjArticles: getMjArticles,
+    getMjArticles: getMjArticles
   };
 });

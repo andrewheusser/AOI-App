@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "babel client -d lib --copy-files --ignore dist"
+    "build": "babel client --out-dir lib --copy-files"
   },
   "version": "1.0.0",
   "description": "A web app that allows the user to search pubmed, monitor specific journals and easily add papers to a shared database",

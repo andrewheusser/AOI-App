@@ -1,5 +1,4 @@
-angular.module('AOIApp')
-  .controller('databaseResultsCtrl', ['$scope', '$location', '$http', 'databaseService', 'userService', function($scope, $location, $http, databaseService, userService) {
+angular.module('AOIApp').controller('databaseResultsCtrl', ['$scope', '$location', '$http', 'databaseService', 'userService', function ($scope, $location, $http, databaseService, userService) {
 
   MY_SCOPE = $scope;
 
@@ -8,14 +7,13 @@ angular.module('AOIApp')
   $scope.showAbstract = false;
   $scope.user = userService.user;
 
-  databaseService.get($scope.dbSearch)
-    .success((data)=>{
-      console.log(data)
-      $scope.dbArticles = data;
-      $scope.loading = false;
-    }).catch((err)=>{
-      console.log(err)
-    })
+  databaseService.get($scope.dbSearch).success(function (data) {
+    console.log(data);
+    $scope.dbArticles = data;
+    $scope.loading = false;
+  }).catch(function (err) {
+    console.log(err);
+  });
 
   // $scope.dbSearch = "Davachi L";
 
@@ -27,7 +25,7 @@ angular.module('AOIApp')
   // });
 
   $scope.openLink = function (id) {
-            link = $scope.dbArticles[id].URL;
-            window.open(link); // in new tab
+    link = $scope.dbArticles[id].URL;
+    window.open(link); // in new tab
   };
 }]);

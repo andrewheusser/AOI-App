@@ -1,22 +1,21 @@
-angular.module('AOIApp')
-  .factory('userService', ['$http',function($http) {
+angular.module('AOIApp').factory('userService', ['$http', function ($http) {
   return {
-    load: function() {
+    load: function load() {
       return $http.get('/api/auth');
     },
-    logout: function() {
+    logout: function logout() {
       return $http.get('/api/auth/logout');
     },
-    login: function(inputs) {
+    login: function login(inputs) {
       return $http.post('/api/auth/login', inputs);
     },
-    register: function(inputs) {
+    register: function register(inputs) {
       return $http.post('/api/auth/register', inputs);
     },
-    locations: function() {
+    locations: function locations() {
       return $http.get('/api/auth/locations');
     },
-    check: function() {
+    check: function check() {
       return $http.get('/api/auth/check');
     },
     user: {
@@ -24,7 +23,7 @@ angular.module('AOIApp')
       password: '',
       loggedIn: false,
       myjournals: [],
-      keywords: [],
+      keywords: []
     }
-  }
+  };
 }]);
